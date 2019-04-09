@@ -1,0 +1,222 @@
+﻿<!DOCTYPE html>
+<html class="no-js css-menubar" lang="zh-cn">
+
+    <head>
+        <title>机场</title>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <!-- 移动设备 viewport -->
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" />
+        <!-- 第三方地图 -->
+        <script type="text/javascript" src="http://180.76.109.63/leaflet/lib/include-lib.js?time=20180905" libpath="http://180.76.109.63/leaflet/lib/" include="jquery,bootstrap,bootstrap-select,web-icons,haoutil,nprogress,toastr,turf,echarts-forleaflet,leaflet-mars,esri-leaflet,turf,leaflet-wfs"></script>
+        <link href="http://180.76.109.63/leaflet/css/style.css?time=20180905" rel="stylesheet" />
+        <!-- 公共js -->
+        <script type="text/javascript" src="./js/common.js"></script>
+        <!-- 第三方树结构 -->
+        <script type="text/javascript" src="./lib/zTree/js/jquery.ztree.all.min.js"></script>
+        <link href="./lib/zTree/css/zTreeStyle.css" rel="stylesheet" />
+        <!--layui-->
+        <script type="text/javascript" src="./lib/layui/layui.all.js"></script>
+        <link href="./lib/layui/css/layui.css" rel="stylesheet" />
+        <!-- 字体 -->
+        <link href="css/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <!-- 公共样式 -->
+        <link href="./css/style.css" rel="stylesheet" />
+        <link href="./css/index.css" rel="stylesheet" />
+        <style>
+
+        </style>
+    </head>
+
+    <body>
+        <div id="centerDiv">
+            <div id="map" class="map"></div>
+
+        </div>
+        <div onclick="L.widget.activate('lib/map/widgets/manageBasemaps/widget.js', true)" style="position: absolute;left: 5px; bottom: 25px; width: 36px; height: 36px;padding:5px; background-color: rgba(0, 0, 0, 0.3);z-index:9999;"><img src="http://180.76.109.63/leaflet/lib/leaflet-mars/images/layers.png" /></div>
+
+        </div>
+
+        <script>
+            var map;
+            var markers = [];
+            var userMarkerLon;
+            var userMarkerLat;
+            var cars; //车辆层
+            var peoples; //人员层
+            var markers1 = []; //组1
+            var markers2 = []; //组2
+            $(document).ready(function() {
+                if (window.parent && window.parent.setStyleByTheme) {
+                    haoutil.storage.add('theme', 'blue');
+                    window.parent.setStyleByTheme();
+                }
+                initMap();
+                getList();
+                setTimeout(function() {
+                    pantoMap();
+                }, 5000);
+                setInterval(function() {
+                    getList();
+                }, 10000);
+            });
+
+            //定义不同的图标
+            var peopleIcon = L.icon({
+                iconUrl: './img/index/people.png',
+                iconSize: [50, 50]
+            });
+            var carIcon = L.icon({
+                iconUrl: './img/index/car.png',
+                iconSize: [50, 50]
+            });
+
+            //根据配置文件初始化系统界面
+            function initMap() {
+                var request = haoutil.system.getRequest();
+                var configfile = './lib/map/config2.json';
+                if (request.config) configfile = '../leaflet-example/config/' + request.config + '.json';
+
+                haoutil.loading.show();
+
+                L.mars.createMap({
+                    id: 'map',
+                    url: configfile + '?time=20180905',
+                    layerToMap: layerToMap,
+                    success: function(_map, gisdata, jsondata) {
+                        haoutil.loading.hide();
+
+                        map = _map;
+
+                        //如果配置默认有图层控制控件，移除（与widget功能重复）
+                        if (gisdata.controls && gisdata.controls.layers) {
+                            map.removeControl(gisdata.controls.layers);
+                        }
+
+                        //初始化widget管理器
+                        if (haoutil.isutil.isNotNull(request.widget)) {
+                            jsondata.widget.widgetsAtStart = [];
+                        }
+                        L.widget.init(_map, jsondata.widget);
+
+                        //如果url传参，激活对应widget
+                        if (haoutil.isutil.isNotNull(request.widget)) L.widget.activate(request.widget);
+
+                        //如果有xyz传参，进行定位
+                        if (haoutil.isutil.isNotNull(request.x) && haoutil.isutil.isNotNull(request.y) && haoutil.isutil.isNotNull(request.z)) {
+                            var x = Number(request.x);
+                            var y = Number(request.y);
+                            var z = Number(request.z);
+                            map.setView([y, x], z);
+                        }
+
+                        initWork();
+                    }
+                });
+            }
+
+            //当前页面业务相关
+            function initWork() {
+                // L.widget.disable('lib/map/widgets/toolBar/widget.js');
+                //getList();
+            }
+
+            //自定义图层添加方法
+            function layerToMap(config, layer) {}
+
+            //外部页面调用
+            function activateWidget(item) {
+                L.widget.activate(item);
+            }
+
+            function activateFunByMenu(fun) {
+                eval(fun);
+            }
+
+            //获取 GPS点相关信息
+            function getList() {
+                var userId = getParam('userId');
+                if (peoples) {
+                    map.removeLayer(peoples);
+                }
+                if (cars) {
+                    map.removeLayer(cars);
+                }
+
+                getRequest(
+                    'airPortService/inter/gps',
+                    'post', {
+                        userId: userId,
+                        sipnum: '',
+                        timeSpace: 10000
+                    },
+                    function(data) {
+                        var pointData = data.gpsData;
+                        var airMarker;
+                        markers1 = [];
+                        markers2 = [];
+                        markers = [];
+                        //console.log(markers, 'markers');
+                        pointData.forEach(function(item, index) {
+                            if (userId == item.user) {
+                                userMarkerLon = item.lat;
+                                userMarkerLat = item.lon;
+                            }
+                            var peopleContent = 'sip号：' + item.user + '<br>用户名:' + item.obj.userName + '<br>类型：' + item.type + '<br>纬度：' + item.lat + '<br>经度：' + item.lon;
+                            var carContent = 'sip号：' + item.user + '<br>类型：' + item.obj.carType + '<br>名称：' + item.obj.carName + '<br>纬度：' + item.lat + '<br>经度：' + item.lon;
+
+                            if (item.type == 'car') {
+                                airMarker = L.marker(L.latLng(item.lat, item.lon), {
+                                    title: '汽车',
+                                    icon: carIcon
+                                });
+                                markers1.push(airMarker);
+                                //markers.push(airMarker);
+                                airMarker.bindPopup(carContent).openPopup();
+                            } else if (item.type == 'ugps') {
+                                var airMarker = L.marker(L.latLng(item.lat, item.lon), {
+                                    title: '人员',
+                                    icon: peopleIcon
+                                });
+                                markers2.push(airMarker);
+                                // markers.push(airMarker2);
+                                airMarker.bindPopup(peopleContent).openPopup();
+                            }
+                            //设置标注的自定义属性值
+                            Object.defineProperties(airMarker, {
+                                sip: {
+                                    value: item.user
+                                },
+                                lon: {
+                                    value: item.lon
+                                },
+                                lat: {
+                                    value: item.lat
+                                },
+                                id: {
+                                    value: index + 1
+                                }
+                            });
+
+                            //airMarker.on('click', MarkerClickEvent);
+                            markers.push(airMarker);
+                        });
+
+                        cars = L.layerGroup(markers1);
+                        //cars.addTo(map);
+                        peoples = L.layerGroup(markers2);
+                        //peoples.addTo(map);
+                        //console.log(cars, peoples);
+                        cars.addTo(map);
+                        peoples.addTo(map);
+                    }
+                );
+            }
+
+            function pantoMap() {
+                map.panTo([userMarkerLon, userMarkerLat]);
+            }
+        </script>
+    </body>
+
+</html>

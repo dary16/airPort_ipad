@@ -1,0 +1,249 @@
+﻿<!DOCTYPE html>
+<html class="no-js css-menubar" lang="zh-cn">
+
+    <head>
+        <title>机场-岗哨维护</title>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <!-- 移动设备 viewport -->
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" />
+        <!-- 第三方库 -->
+        <!-- <script type="text/javascript" src="./lib/jquery-1.8.3.min.js"></script> -->
+        <script type="text/javascript" src="http://180.76.109.63/leaflet/lib/include-lib.js?time=20180905" libpath="http://180.76.109.63/leaflet/lib/" include="jquery,web-icons,bootstrap,bootstrap-select,haoutil,nprogress,toastr,turf,echarts-forleaflet,leaflet-mars,esri-leaflet,turf,leaflet-wfs"></script>
+        <!-- layui -->
+        <script type="text/javascript" src="./lib/layui/layui.all.js"></script>
+        <link href="./lib/layui/css/layui.css" rel="stylesheet" />
+        <!-- 第三方树结构 -->
+        <script type="text/javascript" src="./lib/zTree/js/jquery.ztree.all.min.js"></script>
+        <link href="./lib/zTree/css/zTreeStyle.css" rel="stylesheet" />
+        <!-- 字体 -->
+        <link href="css/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <!-- 公共样式 -->
+        <link href="./css/style.css" rel="stylesheet" />
+        <link href="./css/sentinel.css" rel="stylesheet" />
+    </head>
+
+    <body>
+        <div id="centerDiv">
+            <div id="map" class="map"></div>
+        </div>
+        <div class="sentryWrap">
+            <div class="sentryList" id="change">
+                <p class="titles"><span class="tltle_active fl" id="gs">岗哨</span> <span class="title_color fr" id="xg" style="border-top-right-radius: 16px;">巡更</span></p>
+                <div class="content1">
+                    <ul id="gsList"></ul>
+                    <div class="addList">
+                        <a> <img class="add" src="./img/sentinel/add.png" alt="新建岗哨" /> </a>
+                    </div>
+                    <div class="zoomOut"><span>岗哨列表</span></div>
+                </div>
+                <div class="content2" style="display: none;">
+                    <ul id="xgList"></ul>
+                    <div class="addList">
+                        <a> <img class="add" src="./img/sentinel/add.png" alt="新建巡更" /> </a>
+                    </div>
+                    <div class="zoomOut"><span>巡更列表</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="choosePeople" style="display: none;">
+            <div class="left">
+                <div class="addressGroup">
+                    <ul id="addressList" class="ztree"></ul>
+                </div>
+            </div>
+            <div class="right">
+                <div class="title">已选择队员</div>
+                <div class="chooseList">
+                    <ul id="teamAll"></ul>
+                    <div class="btns"><button id="yes" type="button">确定</button> <button id="cancel" type="button">取消</button></div>
+                </div>
+            </div>
+        </div>
+        <!-- 公共js -->
+        <script type="text/javascript" src="./js/common.js"></script>
+        <!-- <script type="text/javascript" src="./js/map.js"></script> -->
+        <script type="text/javascript" src="./js/sentinel.js"></script>
+
+        <script>
+            var map;
+            var gPoint;
+            var marker;
+            $(document).ready(function() {
+                if (window.parent && window.parent.setStyleByTheme) {
+                    haoutil.storage.add('theme', 'blue');
+                    window.parent.setStyleByTheme();
+                }
+                initMap();
+            });
+
+            //图标
+            var num1 = L.icon({
+                iconUrl: './img/sentinel/1.png',
+                iconSize: [50, 50]
+            });
+
+            //根据配置文件初始化系统界面
+            function initMap() {
+                var request = haoutil.system.getRequest();
+                var configfile = './lib/map/config.json';
+                if (request.config) configfile = '../leaflet-example/config/' + request.config + '.json';
+
+                haoutil.loading.show();
+
+                L.mars.createMap({
+                    id: 'map',
+                    url: configfile + '?time=20180905',
+                    layerToMap: layerToMap,
+                    success: function(_map, gisdata, jsondata) {
+                        haoutil.loading.hide();
+
+                        map = _map;
+                        // map.on('click', function(e) {
+                        //     console.log(e.latlng.lat.toFixed(5), e.latlng.lng.toFixed(5));
+                        // });
+
+                        //如果配置默认有图层控制控件，移除（与widget功能重复）
+                        if (gisdata.controls && gisdata.controls.layers) {
+                            map.removeControl(gisdata.controls.layers);
+                        }
+
+                        //初始化widget管理器
+                        if (haoutil.isutil.isNotNull(request.widget)) {
+                            jsondata.widget.widgetsAtStart = [];
+                        }
+                        L.widget.init(_map, jsondata.widget);
+
+                        //如果url传参，激活对应widget
+                        if (haoutil.isutil.isNotNull(request.widget)) L.widget.activate(request.widget);
+
+                        //如果有xyz传参，进行定位
+                        if (haoutil.isutil.isNotNull(request.x) && haoutil.isutil.isNotNull(request.y) && haoutil.isutil.isNotNull(request.z)) {
+                            var x = Number(request.x);
+                            var y = Number(request.y);
+                            var z = Number(request.z);
+                            map.setView([y, x], z);
+                        }
+
+                        initWork();
+                    }
+                });
+            }
+
+            //当前页面业务相关
+            function initWork() {
+                //初始化画图工具
+                {
+                    InitDraw();
+                }
+            }
+
+            //初始化画图工具
+            var drawTool;
+            var lineArray;
+            var newArray = [];
+            var latlngs; //存放巡更路线
+
+            function InitDraw() {
+                if (drawTool != null) return;
+                var that = this;
+                drawTool = new L.mars.Draw({
+                    map: this.map,
+                    isOnly: true,
+                    hasDel: true,
+                    onEvnet: true,
+                    onStartEditing: function(layer) {},
+                    onStopEditing: function(featurelayer) {
+                        //多边形转成string
+                        var polygonstring = JSON.stringify(featurelayer.toGeoJSON());
+                        //把string转成GeoJson格式
+                        var polygonJson = JSON.parse(polygonstring);
+                        lineArray = polygonJson.geometry.coordinates;
+                        var layers = [];
+                        lineArray.forEach(function(item, index) {
+                            var airMarker = L.marker([item[1], item[0]], {
+                                icon: L.icon({
+                                    iconUrl: './img/sentinel/' + index + '.png',
+                                    iconSize: [40, 40]
+                                })
+                            });
+
+                            layers.push(airMarker);
+
+
+                            newArray.push({
+                                positionLongitude: item[1],
+                                positionLatitude: item[0]
+                            });
+                        });
+                        gPoint = L.layerGroup(layers);
+                        map.addLayer(gPoint);
+                        //console.log(newArray, 'llLALALALA');
+                        //latlngs = JSON.stringify(newArray);
+                        console.log(latlngs);
+                        $('#latlngs').val(JSON.stringify(newArray));
+                        //return JSON.stringify(newArray);
+                        // console.log(JSON.parse(lineArray));
+                        //与点位进行相交查询
+                        // $.each(markers, function(i, m) {
+                        //     var latlng = m.getLatLng();
+                        //     var coor = [latlng.lng, latlng.lat];
+                        //     var isIntersect = Intersect(coor, polygonJson.geometry.coordinates);
+
+                        //     //如果相交输出标注的ID
+                        //     if (isIntersect) {
+                        //         console.log(m.id);
+                        //     }
+
+                        // });
+                    }
+                });
+                this.map.addLayer(drawTool.getLayer());
+                return drawTool;
+            }
+
+            //自定义图层添加方法
+            function layerToMap(config, layer) {}
+            var g_lng;
+            var g_lat;
+            //标注的点击事件
+            function MarkerClickEvent() {
+                map.on('click', function(e) {
+                    console.log(marker);
+                    var g_lng = e.latlng.lat.toFixed(5);
+                    var g_lat = e.latlng.lng.toFixed(5);
+
+                    if (marker == undefined) {
+                        marker = L.marker([g_lng, g_lat]);
+                        map.addLayer(marker);
+                    } else {
+                        map.removeLayer(marker);
+                        marker = L.marker([g_lng, g_lat]);
+                        map.addLayer(marker);
+                    }
+
+                    var latlng = [g_lng, g_lat];
+
+                    $('#addressLngLat').val(latlng);
+                    //$('#addressLat').val(g_lat);
+                });
+            }
+
+            //巡更路线
+            function xgLine() {
+                var polyline = {
+                    name: '线',
+                    iconClass: 'mp_icon_line',
+                    type: 'polyline',
+                    style: {
+                        fill: false,
+                        color: '#0000ff',
+                        weight: 3
+                    }
+                };
+                drawTool.startDraw(polyline.type, polyline);
+            }
+        </script>
+    </body>
+
+</html>

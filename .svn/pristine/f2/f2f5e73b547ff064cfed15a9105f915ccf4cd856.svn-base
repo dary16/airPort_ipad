@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html class="no-js css-menubar" lang="zh-cn">
+
+    <head>
+        <title>灯光统计</title>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <!-- 移动设备 viewport -->
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" />
+        <!-- 第三方库 -->
+        <script type="text/javascript" src="./lib/jquery-1.8.3.min.js"></script>
+        <script type="text/javascript" src="./lib/layui/layui.all.js"></script>
+        <link rel="stylesheet" href="./lib/layui/css/layui.css" />
+        <script type="text/javascript" src="./lib/zTree/js/jquery.ztree.all.min.js"></script>
+        <link href="./lib/zTree/css/zTreeStyle.css" rel="stylesheet" />
+        <!-- 公共js -->
+        <script type="text/javascript" src="./js/common.js"></script>
+        <!-- 当前页需要的js -->
+        <script type="text/javascript" src="./js/list-light-history.js"></script>
+        <!-- 字体 -->
+        <link href="css/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <!-- 公共样式 -->
+        <link href="./css/style.css" rel="stylesheet" />
+        <link href="./css/list.css" rel="stylesheet" />
+    </head>
+
+    <body>
+        <div class="scheduling">
+            <div class="header">
+                <a id="backApp" class="back" href="javascript:;"> <img src="img/back.png" /> </a>
+                <p>灯光统计</p>
+            </div>
+            <div class="contentList">
+                <div class="search">
+                    <form id="form" class="clearfix layui-form">
+                        <div class="searchItem">
+                            <label class="title">道面编号：</label>
+                            <div class="input-block"><input class="layui-input" type="text" name="roadNum" placeholder="请输入道面编号" /></div>
+                        </div>
+                        <div class="searchItem"><button type="button" class="searchBtn">搜索</button></div>
+                    </form>
+                </div>
+                <ul class="title" id="topTitle">
+                    <!--title-->
+                </ul>
+                <div class="list">
+                    <!--list-->
+                </div>
+            </div>
+            <div id="pagination">
+                <!--分页-->
+            </div>
+        </div>
+    </body>
+
+</html>

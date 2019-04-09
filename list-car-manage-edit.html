@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html class="no-js css-menubar" lang="zh-cn">
+
+    <head>
+        <title>车辆管理</title>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <!-- 移动设备 viewport -->
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" />
+        <!-- 第三方库 -->
+        <script type="text/javascript" src="./lib/jquery-1.8.3.min.js"></script>
+        <script type="text/javascript" src="./lib/layui/layui.all.js"></script>
+        <link rel="stylesheet" href="./lib/layui/css/layui.css" />
+        <script type="text/javascript" src="./lib/zTree/js/jquery.ztree.all.min.js"></script>
+        <link href="./lib/zTree/css/zTreeStyle.css" rel="stylesheet" />
+        <!-- 公共js -->
+        <script type="text/javascript" src="./js/common.js"></script>
+        <!-- 当前页需要的js -->
+        <script type="text/javascript" src="./js/list-car-manage-edit.js"></script>
+        <!-- 字体 -->
+        <link href="css/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <!-- 公共样式 -->
+        <link href="./css/style.css" rel="stylesheet" />
+        <link href="./css/list-edit.css" rel="stylesheet" />
+    </head>
+
+    <body>
+        <div class="scheduling">
+            <div class="header">
+                <a id="comBack" class="back" href="javascript:;"> <img src="img/back.png" /> </a>
+                <p>新增</p>
+            </div>
+            <div class="contentEdit">
+                <form id="form" class="layui-form clearfix">
+                    <div class="searchItem">
+                        <label class="title">车辆类型：</label>
+                        <div class="inputBlock">
+                            <select name="carType">
+                                <option value="">请选择类型</option>
+                                <option value="充氧车">充氧车</option>
+                                <option value="充氮车">充氮车</option>
+                                <option value="电源车">电源车</option>
+                                <option value="空调车">空调车</option>
+                                <option value="送冷车">送冷车</option>
+                                <option value="充电车">充电车</option>
+                                <option value="制送冷车">制送冷车</option>
+                                <option value="油泵车">油泵车</option>
+                                <option value="制氧车">制氧车</option>
+                                <option value="制氮车">制氮车</option>
+                                <option value="电瓶起动拖车">电瓶起动拖车</option>
+                                <option value="肼燃料车">肼燃料车</option>
+                                <option value="定检工作车">定检工作车</option>
+                                <option value="尾气处理车">尾气处理车</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="searchItem">
+                        <label class="title">车牌号：</label>
+                        <div class="inputBlock"><input class="layui-input" type="text" name="carCode" placeholder="请输入车牌号" autocomplete="off" /></div>
+                    </div>
+                    <div class="searchItem">
+                        <label class="title">出厂编码：</label>
+                        <div class="inputBlock"><input class="layui-input" id="deliveryCode" type="text" name="deliveryCode" placeholder="请输入出厂编码" /></div>
+                    </div>
+
+                    <div class="searchItem">
+                        <label class="title">出厂日期：</label>
+                        <div class="inputBlock"><input class="layui-input" id="sendTime" type="text" name="deliveryTime" placeholder="请选择出厂日期" autocomplete="off" /></div>
+                    </div>
+                    <div class="searchItem">
+                        <label class="title">技术状况：</label>
+                        <div class="inputBlock">
+                            <select name="status">
+                                <option value="">请选择技术状况</option>
+                                <option value="0" selected>良好</option>
+                                <option value="1">异常</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="searchItem">
+                        <label class="title">长(mm)：</label>
+                        <div class="inputBlock"><input class="layui-input" type="text" name="length" placeholder="请输入长" autocomplete="off" /></div>
+                    </div>
+                    <div class="searchItem">
+                        <label class="title">宽(mm)：</label>
+                        <div class="inputBlock"><input class="layui-input" type="text" name="width" placeholder="请输入宽" autocomplete="off" /></div>
+                    </div>
+                    <div class="searchItem">
+                        <label class="title">高(mm)：</label>
+                        <div class="inputBlock"><input class="layui-input" type="text" name="height" placeholder="请输入高" autocomplete="off" /></div>
+                    </div>
+                    <div class="searchItem w100">
+                        <label class="title">备注：</label>
+                        <div class="inputBlock"><textarea name="comment" placeholder="请输入内容" class="layui-textarea"></textarea></div>
+                    </div>
+                    <div class="searchItem"><button type="button" class="searchBtn">完成</button></div>
+                </form>
+            </div>
+        </div>
+    </body>
+
+</html>

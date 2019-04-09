@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html class="no-js css-menubar" lang="zh-cn">
+    <head>
+        <title>拦阻网维护列表</title>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <!-- 移动设备 viewport -->
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" />
+        <!-- 第三方库 -->
+        <script type="text/javascript" src="./lib/jquery-1.8.3.min.js"></script>
+        <script type="text/javascript" src="./lib/layui/layui.all.js"></script>
+        <link rel="stylesheet" href="./lib/layui/css/layui.css" />
+        <script type="text/javascript" src="./lib/zTree/js/jquery.ztree.all.min.js"></script>
+        <link href="./lib/zTree/css/zTreeStyle.css" rel="stylesheet" />
+        <!-- 公共js -->
+        <script type="text/javascript" src="./js/common.js"></script>
+        <!-- 字体 -->
+        <link href="css/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <!-- 公共样式 -->
+        <link href="./css/style.css" rel="stylesheet" />
+        <link href="./css/list.css" rel="stylesheet" />
+        <style>
+            .ul {
+                padding: 20px 30px;
+            }
+
+            .ul li {
+                height: 40px;
+                line-height: 40px;
+                border-bottom: 1px solid #ddd;
+                text-indent: 2em;
+            }
+
+            .ul h3 {
+                border-bottom: 1px solid #000;
+                text-align: center;
+                line-height: 50px;
+            }
+
+            .ul li a:hover {
+                color: #000;
+            }
+        </style>
+    </head>
+
+    <body>
+        <ul class="ul">
+            <h3>警卫连</h3>
+            <li><a href="scheduling.html">排班</a></li>
+            <li><a href="list.html">查询统计(人) 值班记录、巡更线路</a></li>
+            <li><a href="list-shifts.html">班 值班记录、巡更线路</a></li>
+            <li><a href="list-sentry.html">岗哨 值班记录、巡更线路</a></li>
+            <br />
+            <li><a href="list-post.html">岗位告警列表</a></li>
+            <li><a href="list-post.html">巡更告警列表</a></li>
+            <li><a href="list-error.html">换岗异常列表</a></li>
+            <li><a href="list-error-info.html">换岗异常详情列表</a></li>
+            <h3>场务连</h3>
+            <li><a href="list-road.html">道面检查计划维护</a></li>
+            <li><a href="list-net.html">拦阻网维护</a></li>
+            <li><a href="list-net-inspect.html">拦阻网检查列表</a></li>
+            <li><a href="list-equipment.html">机械装备维护</a></li>
+            <br />
+            <li><a href="list-light.html">灯光检查列表</a></li>
+            <li><a href="list-fireplug.html">消防栓列表</a></li>
+            <li><a href="list-fireplug-inspect.html">消防栓检查列表</a></li>
+            <li><a href="list-count-damage.html">道面损坏异物统计</a></li>
+            <li><a href="list-count-light.html">灯光统计</a></li>
+            <li><a href="list-count-people.html">人员工作量统计</a></li>
+            <h3>汽车连</h3>
+            <li><a href="list-vehicle-management.html">车辆管理</a></li>
+            <li><a href="list-car-task.html">派车任务</a></li>
+            <br />
+            <li><a href="list-carplace.html">派车地点维护</a></li>
+            <li><a href="list-oil-record.html">加油记录</a></li>
+            <li><a href="list-task-record.html">执行任务记录</a></li>
+            <h3>四站连</h3>
+            <li><a href="list-car-manage.html">车辆管理</a></li>
+            <li><a href="list-car-search.html">工作记录统计</a></li>
+            <h3>驱鸟队</h3>
+            <li><a href="list-car-bird-manage.html">车辆管理（驱鸟队）</a></li>
+            <li><a href="list-equipment-manage.html">装备管理</a></li>
+            <li><a href="list-material-manage.html">器材管理</a></li>
+            <li><a href="list-bird-notice.html">鸟情通报</a></li>
+            <li><a href="list-material-consume.html">器材消耗</a></li>
+            <li><a href="list-count-bird.html">鸟情上报</a></li>
+            <h3>油料股</h3>
+            <!--去掉改模块-->
+            <!-- <li><a href="list-count-oil.html">油品消耗统计</a></li> -->
+            <li><a href="list-count-oil-check.html">油品检查列表</a></li>
+            <h3>其它</h3>
+            <li><a id="getPop" href="javascript:;">选车等弹框</a></li>
+        </ul>
+        <script>
+            $('#getPop').on('click', function() {
+                getCarsFn(
+                    'airPortService/carType/list',
+                    'post',
+                    {
+                        userId: '6002',
+                        carType: 'TXY',
+                        carTypeName: '通信导航应急保障车'
+                    },
+                    function(obj, arr) {
+                        obj.remove();
+                        arr.forEach(function(item) {
+                            console.log(JSON.parse(item));
+                        });
+                    }
+                );
+            });
+        </script>
+    </body>
+</html>

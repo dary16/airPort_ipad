@@ -1,0 +1,113 @@
+.search {
+    border-bottom: 1px solid #dbdbdb;
+}
+
+.contentEdit form {
+    padding: 0.6rem 0.3rem;
+}
+
+.contentEdit .searchItem {
+    float: left;
+    width: 50%;
+    padding: 0.33rem 0;
+}
+
+.contentEdit .searchItem:last-child {
+    width: 100%;
+    text-align: center;
+}
+
+.searchItem .title {
+    font-size: 0.42rem;
+    color: #828282;
+    height: 0.8rem;
+    line-height: 0.8rem;
+    float: left;
+    width: 2.4rem;
+    text-align: right;
+}
+
+.inputBlock {
+    width: 6rem;
+    float: left;
+    color: #353535;
+    background: #F6F6F6;
+}
+
+.inputSmall {
+    width: 4rem;
+    float: left;
+    color: #353535;
+    background: #F6F6F6;
+}
+
+.inputSelect {
+    width: 2rem;
+    float: left;
+    color: #353535;
+    background: #F6F6F6;
+}
+
+.scheduling .layui-input,
+.scheduling .layui-select {
+    color: #353535 !important;
+    height: 0.8rem;
+    font-size: 0.36rem;
+}
+
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+    color: #CECECE;
+    font-size: 0.36rem;
+}
+
+.searchBtn {
+    height: 0.9rem;
+    line-height: 0.9rem;
+    background: #339ed4;
+    color: #fff;
+    font-size: 0.44rem;
+    text-align: center;
+    width: 2.4rem;
+    border: none;
+    white-space: nowrap;
+    margin-top: 0.02rem;
+}
+
+.selectOpt {
+    display: block;
+    width: 4.5rem;
+}
+
+.selectOpt option {
+    font-size: 15px;
+}
+
+.groupLine {
+    position: relative;
+}
+
+.operationBtn {
+    font-size: 0.3rem;
+    position: absolute;
+    top: 0.33rem;
+    right: 0rem;
+    line-height: 0.8rem;
+    height: 0.8rem;
+    z-index: 5;
+}
+
+.w100 {
+    width: 100% !important;
+}
+
+.w100 .inputBlock {
+    width: 15.4rem !important;
+}
+
+.w100 textarea {
+    height: 1.6rem !important;
+    /* line-height: 0.8rem; */
+    color: #353535;
+    font-size: 0.4rem;
+}

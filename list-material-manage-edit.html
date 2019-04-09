@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html class="no-js css-menubar" lang="zh-cn">
+
+    <head>
+        <title>器材管理</title>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <!-- 移动设备 viewport -->
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" />
+        <!-- 第三方库 -->
+        <script type="text/javascript" src="./lib/jquery-1.8.3.min.js"></script>
+        <script type="text/javascript" src="./lib/layui/layui.all.js"></script>
+        <link rel="stylesheet" href="./lib/layui/css/layui.css" />
+        <script type="text/javascript" src="./lib/zTree/js/jquery.ztree.all.min.js"></script>
+        <link href="./lib/zTree/css/zTreeStyle.css" rel="stylesheet" />
+        <!-- 公共js -->
+        <script type="text/javascript" src="./js/common.js"></script>
+        <!-- 当前页需要的js -->
+        <script type="text/javascript" src="./js/list-material-manage-edit.js"></script>
+        <!-- 字体 -->
+        <link href="css/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <!-- 公共样式 -->
+        <link href="./css/style.css" rel="stylesheet" />
+        <link href="./css/list-edit.css" rel="stylesheet" />
+    </head>
+
+    <body>
+        <div class="scheduling">
+            <div class="header">
+                <a id="comBack" class="back" href="javascript:;"> <img src="img/back.png" /> </a>
+                <p>新增</p>
+            </div>
+            <div class="contentEdit">
+                <form id="form" class="layui-form clearfix">
+                    <div class="searchItem">
+                        <label class="title">名称：</label>
+                        <div class="inputBlock">
+                            <input class="layui-input" type="text" name="materialName" placeholder="请输入名称" autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="searchItem">
+                        <label class="title">数量：</label>
+                        <div class="inputSmall">
+                            <input class="layui-input" type="text" name="totalNum" placeholder="请输入数量" autocomplete="off" />
+                        </div>
+                        <div class="inputSelect">
+                            <select name="materialUnit">
+                                <option value="">请选择单位</option>
+                                <option value="个" selected>个</option>
+                                <option value="把">把</option>
+                                <option value="只">只</option>
+                                <option value="架">架</option>
+                                <option value="支">支</option>
+                                <option value="发">发</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="searchItem">
+                        <label class="title">类型：</label>
+                        <div class="inputBlock">
+                            <input class="layui-input" type="text" name="materialType" placeholder="请输入类型" autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="searchItem">
+                        <label class="title">型号：</label>
+                        <div class="inputBlock">
+                            <input class="layui-input" type="text" name="model" placeholder="请输入型号" autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="searchItem">
+                        <label class="title">质量状况：</label>
+                        <div class="inputBlock">
+                            <select name="status">
+                                <option value="">请选择质量状况</option>
+                                <option value="0" selected>良好</option>
+                                <option value="1">异常</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="searchItem w100">
+                        <label class="title">备注：</label>
+                        <div class="inputBlock">
+                            <textarea name="comment" placeholder="请输入内容" class="layui-textarea"></textarea>
+                        </div>
+                    </div>
+                    <div class="searchItem"><button type="button" class="searchBtn">完成</button></div>
+                </form>
+            </div>
+        </div>
+    </body>
+
+</html>

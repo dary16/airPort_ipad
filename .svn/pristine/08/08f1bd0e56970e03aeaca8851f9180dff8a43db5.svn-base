@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html class="no-js css-menubar" lang="zh-cn">
+    <head>
+        <title>派车任务</title>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <!-- 移动设备 viewport -->
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" />
+        <!-- 第三方库 -->
+        <script type="text/javascript" src="./lib/jquery-1.8.3.min.js"></script>
+        <script type="text/javascript" src="./lib/layui/layui.all.js"></script>
+        <link rel="stylesheet" href="./lib/layui/css/layui.css" />
+        <script type="text/javascript" src="./lib/zTree/js/jquery.ztree.all.min.js"></script>
+        <link href="./lib/zTree/css/zTreeStyle.css" rel="stylesheet" />
+        <!-- 公共js -->
+        <script type="text/javascript" src="./js/common.js"></script>
+        <!-- 当前页需要的js -->
+        <script type="text/javascript" src="./js/list-car-task-edit.js"></script>
+        <!-- 字体 -->
+        <link href="css/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <!-- 公共样式 -->
+        <link href="./css/style.css" rel="stylesheet" />
+        <link href="./css/list-edit.css" rel="stylesheet" />
+    </head>
+
+    <body>
+        <div class="scheduling">
+            <div class="header">
+                <a id="comBack" class="back" href="javascript:;"> <img src="img/back.png" /> </a>
+                <p>新增</p>
+            </div>
+            <div class="contentEdit">
+                <form id="form" class="layui-form clearfix">
+                    <!-- <div class="searchItem">
+                        <label class="title">车牌号：</label>
+                        <div class="inputBlock"><input class="layui-input" type="text" name="carCode" placeholder="请输入车牌号" autocomplete="off" /></div>
+                    </div> -->
+                    <div class="groupWrap">
+                        <div class="groupLine clearfix">
+                            <div class="searchItem">
+                                <label class="title">车辆：</label>
+                                <div class="inputBlock"><input readonly style="text-align:left" class="layui-input getCarData" type="text" placeholder="请选择车" /></div>
+                            </div>
+                            <div class="searchItem" style="width:50%;">
+                                <label class="title">司机：</label>
+                                <div class="inputBlock"><input readonly style="text-align:left" class="layui-input getUserData" type="text" placeholder="请选择人员" /></div>
+                            </div>
+                            <span class="operationBtn" id="addBtn" href="javascript:;">增加</span>
+                        </div>
+                    </div>
+                    <div class="searchItem">
+                        <label class="title">时间：</label>
+                        <div class="inputBlock"><input class="layui-input" id="sendTime" type="text" name="sendTime" placeholder="请选择时间" /></div>
+                    </div>
+                    <div class="searchItem" id="taskType">
+                        <label class="title">任务：</label>
+                        <div class="inputBlock">
+                            <select name="sendType">
+                                <option value="">请选择任务</option>
+                                <option value="加油">加油</option>
+                                <option value="接人">接人</option>
+                                <option value="牵引">牵引</option>
+                                <option value="充氧">充氧</option>
+                                <option value="充氮">充氮</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="searchItem">
+                        <label class="title">地点：</label>
+                        <div class="inputBlock">
+                            <select name="carPlace" id="placeList">
+                                <option value="">请选择地点</option>
+                            </select>
+                        </div>
+                        <!-- <div class="inputBlock"><input class="layui-input" type="text" name="carPlace" placeholder="请输入地点" autocomplete="off" /></div> -->
+                    </div>
+                    <div class="searchItem" id="status">
+                        <label class="title">状态：</label>
+                        <div class="inputBlock">
+                            <select name="status">
+                                <option value="">请选择状态</option>
+                                <option value="未派车">未派车</option>
+                                <option value="已派车">已派车</option>
+                                <option value="完成">完成</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- <div class="searchItem">
+                        <label class="title">快速选车：</label>
+                        <div class="inputBlock"><input readonly style="text-align:left" class="layui-input getCarsFn" type="text" placeholder="请选择车" /></div>
+                    </div> -->
+                    <div class="searchItem"><button type="button" class="searchBtn getCarsFn" style="margin-right:1rem;">快速选车</button> <button type="button" id="searchBtn" class="searchBtn">完成</button></div>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

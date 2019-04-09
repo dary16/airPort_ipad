@@ -1,0 +1,239 @@
+.sentryWrap {
+    position: absolute;
+    top: 1rem;
+    left: 0;
+    z-index: 999;
+}
+
+.sentryList {
+    width: 4.75rem;
+    height: 9rem;
+    background: rgba(0, 0, 0, .8);
+    box-shadow: 1px -1px 1px #ebebeb;
+    /* background: url(../img/sentinel/list_bg.png) no-repeat; */
+    background-size: 100% 100%;
+    position: relative;
+    border-top-right-radius: .16rem;
+    border-bottom-right-radius: .16rem;
+}
+
+.sentryList p {
+    height: .7rem;
+    line-height: .7rem;
+    font-size: .4rem;
+    color: #39B0EC;
+    text-align: center;
+    margin: 0;
+}
+
+.sentryList ul {
+    padding-left: 0;
+    height: 6.4rem;
+    overflow: auto;
+}
+
+.sentryList ul li {
+    height: .8rem;
+    line-height: .8rem;
+    border-bottom: 1px solid #737171;
+    margin-right: 3px;
+    clear: both;
+}
+
+.sentryList ul li span {
+    font-size: .3rem;
+    color: #fff;
+    padding-left: .38rem;
+}
+
+.sentryList ul li .more {
+    width: .16rem;
+    height: .29rem;
+    margin-right: .26rem;
+    margin-top: -0.7rem;
+}
+
+.sentryList ul li .del {
+    width: .51rem;
+    height: .51rem;
+    margin-right: .05rem;
+    margin-top: -0.7rem;
+}
+
+.sentryList ul li span {
+    display: inline-block;
+    height: .8rem;
+    line-height: .8rem;
+    width: 3.35rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.sentryList ul li div {
+    display: inline-block;
+    height: 0.8rem;
+}
+
+.sentryList .addList {
+    left: 1.9rem;
+    bottom: .53rem;
+    text-align: center;
+    position: absolute;
+}
+
+.sentryList .addList .add {
+    width: .9rem;
+    height: .9rem;
+}
+
+.content1,
+.content2 {
+    clear: both;
+}
+
+.zoomOut {
+    position: absolute;
+    right: -0.66rem;
+    top: 3.2rem;
+    width: .67rem;
+    height: 2.5rem;
+}
+
+.zoomOut span {
+    display: block;
+    background: url(../img/sentinel/tab.png) no-repeat;
+    background-size: 100% 100%;
+    width: .67rem;
+    height: 2.5rem;
+    font-size: .32rem;
+    color: #39B0EC;
+    padding: .28rem .18rem;
+    text-align: center;
+}
+
+.popContent {
+    margin: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    width: 390px;
+    height: 400px;
+    background: url(../img/sentinel/pop_bg.png) no-repeat;
+    background-size: 100% 100%;
+    z-index: 999;
+}
+
+.title_color {
+    background: #383838;
+    color: #f8f8f8;
+}
+
+#change .title_active {
+    background: #000;
+    color: #39B0EC;
+}
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+.sentryList p span {
+    width: 50%;
+    text-align: center;
+}
+
+li {
+    list-style: none;
+}
+
+.choosePeople {
+    position: absolute;
+    top: 131px;
+    left: 230px;
+    width: 600px;
+    height: 500px;
+    z-index: 19891017;
+    background: #fff;
+}
+
+.choosePeople .left {
+    width: 30%;
+    height: 100%;
+    float: left;
+    background: #EAEAEA;
+}
+
+.choosePeople .right {
+    width: 70%;
+    height: 100%;
+    float: right;
+    background: #E7E7E7;
+}
+
+.choosePeople .title {
+    height: 66px;
+    line-height: 66px;
+    font-size: 24px;
+    text-align: center;
+    color: #505050;
+    background: url(../img/sentinel/title_bg.png) no-repeat;
+    background-size: 100% 100%;
+}
+
+.choosePeople .chooseList {
+    color: #4E4D4D;
+    font-size: 24px;
+}
+
+.choosePeople .chooseList ul {
+    overflow: hidden;
+    padding-left: 80px;
+    min-height: 300px;
+}
+
+.choosePeople .chooseList ul li {
+    width: 33.33%;
+    height: 50px;
+    line-height: 50px;
+    float: left;
+}
+
+.choosePeople .chooseList ul li img {
+    width: 24px;
+    height: 24px;
+    margin-left: 10px;
+}
+
+.choosePeople .yes {
+    margin-right: 30px;
+}
+
+.choosePeople .btns {
+    text-align: center;
+}
+
+.choosePeople .btns button {
+    width: 2.4rem;
+    height: 1rem;
+    background: rgba(57, 176, 236, 1);
+    border-radius: 15px;
+    font-size: 26px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 1);
+}
+
+#addressList li {
+    line-height: 35px;
+}
+
+.layui-form-select dl {
+    background-color: #a7a0a0 !important;
+}

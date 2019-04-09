@@ -1,0 +1,328 @@
+.search {
+    border-bottom: 1px solid #dbdbdb;
+}
+
+.search form {
+    padding: 0.2rem 0;
+}
+
+.searchItem {
+    float: left;
+    margin-left: 0.62rem;
+    width: 30%;
+}
+
+.searchItem .title {
+    font-size: 0.42rem;
+    color: #828282;
+    height: 0.9rem;
+    line-height: 0.9rem;
+    float: left;
+}
+
+.halfItem {
+    float: left;
+    width: 50%;
+    padding: 0.1rem 0.2rem;
+}
+
+.halfItem .title {
+    font-size: 0.36rem;
+    color: #0088ff;
+    height: 1.07rem;
+    line-height: 1.07rem;
+    float: left;
+}
+
+.halfItems {
+    float: left;
+    width: 50%;
+    padding: 0.1rem 0.2rem;
+}
+
+.halfItems .title {
+    font-size: 0.36rem;
+    color: #0088ff;
+    height: 0.8rem;
+    line-height: 0.8rem;
+    float: left;
+}
+
+.halfItems .inputHalf {
+    width: 59%;
+    float: left;
+}
+
+.halfItems .layui-input {
+    padding-left: 0 !important;
+}
+
+.popItems {
+    float: left;
+    width: 50%;
+    padding: 0.1rem 0.2rem;
+}
+
+.popItems .title {
+    font-size: 0.4rem;
+    color: #0088ff;
+    height: 0.8rem;
+    line-height: 0.8rem;
+    float: left;
+    width: 2rem;
+    text-align: right;
+}
+
+.left form {
+    padding: 0.1rem 0.7rem;
+    background: #efefef;
+    height: 530px;
+}
+
+.inputHalf {
+    width: 57%;
+    float: left;
+}
+
+#all {
+    width: 100%;
+    float: left;
+}
+
+.headerItem h3 {
+    height: 1.12rem;
+    line-height: 1.12rem;
+    text-align: center;
+    font-weight: bold;
+    background: #f6f6f6;
+    font-size: 0.4rem;
+    color: #6d6d6d;
+}
+
+.formHeader h3 input {
+    height: 1.12rem;
+    line-height: 1.12rem;
+    text-align: center;
+    font-weight: bold;
+    background: #f6f6f6;
+    color: #6d6d6d;
+    font-size: 0.4rem;
+}
+
+.contentHalfList .title {
+    overflow: hidden;
+    /* width: 100%; */
+}
+
+.contentHalfList .title li {
+    float: left;
+    font-size: 0.36rem;
+    color: #0383c4;
+    line-height: 0.63rem;
+    text-align: center;
+    overflow: hidden;
+    /*内容超出宽度时隐藏超出部分的内容 */
+    text-overflow: ellipsis;
+    /* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+    white-space: nowrap;
+    /*不换行 */
+}
+
+.contentHalfList .list ul {
+    border-top: 1px solid #dbdbdb;
+    overflow: hidden;
+    width: 100%;
+    font-size: 0;
+    padding: 0 0.1rem;
+}
+
+.contentHalfList .list ul:nth-child(2n-1) {
+    background: #f6f6f6;
+}
+
+.contentHalfList .list ul li {
+    display: inline-block;
+    font-size: 0.32rem;
+    color: #808080;
+    line-height: 0.63rem;
+    text-align: center;
+    overflow: hidden;
+    /*内容超出宽度时隐藏超出部分的内容 */
+    text-overflow: ellipsis;
+    /* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+    white-space: nowrap;
+    /*不换行 */
+}
+
+.halfItems .layui-input,
+.halfItems .layui-select,
+.halfItems .layui-textarea {
+    /* border: 1px solid #8c8c8c; */
+    background: transparent;
+    color: #353535;
+    font-size: 0.36rem;
+    height: 0.8rem;
+    line-height: 0.8rem;
+}
+
+.halfItem .layui-input,
+.halfItem .layui-select,
+.halfItem .layui-textarea {
+    /* border: 1px solid #8c8c8c; */
+    background: transparent;
+    color: #353535;
+    font-size: 0.36rem;
+    height: 1.07rem;
+    line-height: 1.07rem;
+}
+
+.popItems .layui-input,
+.popItems .layui-select,
+.popItems .layui-textarea {
+    /* border: 1px solid #8c8c8c; */
+    background: transparent;
+    color: #353535;
+    font-size: 0.4rem;
+    height: 0.8rem;
+    line-height: 0.8rem;
+}
+
+.layui-input,
+.layui-select,
+.layui-textarea {
+    background: #f6f6f6;
+    color: #353535;
+    font-size: 0.36rem;
+}
+
+.input-block {
+    width: 3.2rem;
+    float: left;
+}
+
+input::-webkit-input-placeholder {
+    /* placeholder颜色  */
+    color: #cecece;
+    /* placeholder字体大小  */
+    font-size: 0.36rem;
+}
+
+.searchBtn {
+    height: 0.52rem;
+    line-height: 0.52rem;
+    /* background: #339ed4; */
+    background: url(../img/search.png) no-repeat;
+    background-size: 100% 100%;
+    color: transparent;
+    font-size: 0.28rem;
+    text-align: center;
+    width: 0.52rem;
+    border: none;
+    white-space: nowrap;
+    margin-top: 0.2rem;
+}
+
+.contentList .title {
+    overflow: hidden;
+    /* width: 100%; */
+}
+
+.contentList .title li {
+    float: left;
+    font-size: 0.42rem;
+    color: #0383c4;
+    line-height: 1.16rem;
+    text-align: center;
+    overflow: hidden;
+    /*内容超出宽度时隐藏超出部分的内容 */
+    text-overflow: ellipsis;
+    /* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+    white-space: nowrap;
+    /*不换行 */
+}
+
+.contentList .list ul {
+    border-top: 1px solid #dbdbdb;
+    overflow: hidden;
+    width: 100%;
+    font-size: 0;
+    padding: 0 0.1rem;
+}
+
+.contentList .list ul:nth-child(2n-1) {
+    background: #f6f6f6;
+}
+
+.contentList .list ul li {
+    display: inline-block;
+    font-size: 0.38rem;
+    color: #7f7f7f;
+    line-height: 1.16rem;
+    text-align: center;
+    overflow: hidden;
+    /*内容超出宽度时隐藏超出部分的内容 */
+    text-overflow: ellipsis;
+    /* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+    white-space: nowrap;
+    /*不换行 */
+}
+
+.contentList .list ul li .video {
+    width: 0.63rem;
+    height: 0.4rem;
+}
+
+.operationBtns a {
+    width: 1.15rem;
+    height: 0.54rem;
+    line-height: 0.54rem;
+    text-align: center;
+    color: #fff;
+    font-size: 0.3rem;
+    background: #39b0ec;
+    display: inline-block;
+    margin: 0.41rem auto 0 auto;
+    cursor: pointer;
+    margin: 0 0.05rem;
+}
+
+/**列表无数据样式**/
+.noData {
+    width: 100%;
+    text-align: center;
+    font-size: 0.4rem;
+    min-height: 3rem;
+    line-height: 3rem;
+}
+
+/**分页**/
+#pagination {
+    text-align: center;
+    padding: 0.3rem 0;
+    display: none;
+}
+
+.layui-laypage a,
+.layui-laypage span {
+    padding: 0 0.3rem;
+    height: 0.7rem;
+    line-height: 0.7rem;
+    font-size: 0.38rem;
+}
+
+.thumbnail {
+    width: 0.92rem;
+    height: 0.92rem;
+}
+
+.green {
+    color: #009f00 !important;
+}
+
+.red {
+    color: #ff0000 !important;
+}
+
+.yellow {
+    color: #d67d4d !important;
+}

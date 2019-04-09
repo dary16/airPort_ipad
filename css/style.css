@@ -1,0 +1,786 @@
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+*:before,
+*:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
+    overflow: hidden;
+    background-color: transparent !important;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    font-size: 0.14rem;
+    font-family: 'Helvetica Neue', Helvetica, Tahoma, Arial, 'Microsoft Yahei', 'Hiragino Sans GB', 'WenQuanYi Micro Hei', sans-serif;
+}
+
+body {
+    overflow-x: hidden;
+    overflow-y: auto;
+    line-height: 1.6;
+    color: #76838f;
+    background-color: #fff;
+}
+
+input,
+button,
+select,
+textarea {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+input::-webkit-input-placeholder {
+    /* placeholder颜色  */
+    color: #fff;
+    /* placeholder字体大小  */
+    font-size: 0.3rem;
+}
+
+a {
+    color: #62a8ea;
+    text-decoration: none;
+}
+
+a:hover,
+a:focus {
+    color: #fff;
+    text-decoration: none;
+}
+
+a:focus {
+    outline: thin dotted;
+    outline: 5px auto -webkit-focus-ring-color;
+    outline: none;
+    outline-offset: -2px;
+}
+
+figure {
+    margin: 0;
+}
+
+img {
+    vertical-align: middle;
+}
+
+li {
+    list-style: none;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.clearfix:after {
+    display: block;
+    clear: both;
+    content: '';
+}
+
+.clearfix {
+    zoom: 1;
+}
+
+.ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+}
+
+.center {
+    text-align: center;
+}
+
+.half {
+    width: 50%;
+}
+
+.halfLeft {
+    width: 50%;
+    float: left;
+}
+
+.halfLeft .layui-form {
+    background: #efefef;
+    border-bottom: 2px solid #dadada;
+}
+
+.time {
+    width: 70% !important;
+}
+
+.contentHalfList {
+    background: #efefef;
+}
+
+.contentHalfList1 .list,
+.contentHalfList2 .list {
+    height: 3.15rem;
+}
+
+.formHeader {
+    position: relative;
+}
+
+.formHeader .editBtn {
+    width: 1.15rem;
+    height: 0.54rem;
+    line-height: 0.54rem;
+    text-align: center;
+    color: #fff;
+    font-size: 0.3rem;
+    background: #39b0ec;
+    display: inline-block;
+    margin: 0.41rem auto 0 auto;
+    cursor: pointer;
+    margin: 0 0.05rem;
+    position: absolute;
+    right: 1rem;
+    top: 0.3rem;
+    border: none;
+}
+
+#centerDiv {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
+    overflow: hidden;
+}
+
+.map-control-bar {
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    padding: 5px;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 9999;
+}
+
+/*弹出层皮肤*/
+.layui-layer-title {
+    background-color: #39b0ec;
+    color: #e0e0e0;
+    font-size: 0.36rem;
+}
+
+.layui-grey .layui-layer-title {
+    background-color: #dcdcdc;
+    color: #3f3f3f;
+    font-size: 0.4rem;
+}
+
+.layui-grey .layui-layer-content {
+    background: #eee;
+    padding: 1rem;
+}
+
+#weatherList ul {
+    overflow: hidden;
+}
+
+#weatherList ul li {
+    list-style: none;
+    float: left;
+    margin-right: 10px;
+}
+
+/**************公用弹框样式开始****************/
+.popupContent {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.77);
+    color: #fff;
+    border-radius: 10px;
+    -webkit-box-shadow: 0 0 7px rgba(255, 255, 255, 0.5);
+    -moz-box-shadow: 0 0 7px rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 7px rgba(255, 255, 255, 0.5);
+    z-index: 999;
+}
+
+.popupTitle {
+    color: #fff;
+    font-size: 0.32rem;
+    height: 0.9rem;
+    line-height: 0.9rem;
+    text-indent: 2em;
+    color: #39b0ec;
+    font-weight: bold;
+    margin-bottom: -0.15rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.popupBtn {
+    margin-top: 0.5rem;
+    overflow: hidden;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.popupBtn li {
+    width: 50%;
+    float: left;
+    text-align: center;
+    cursor: pointer;
+    font-size: 0.36rem;
+    height: 0.8rem;
+    line-height: 0.8rem;
+}
+
+.popupBtn li:first-child {
+    border-right: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/**************公用弹框样式结束****************/
+
+/**************覆盖layui样式开始***************/
+.layui-form-label {
+    font-size: 0.3rem;
+    padding: 0;
+}
+
+.layui-form-label {
+    width: 1.38rem;
+    line-height: 0.5rem;
+}
+
+.layui-input-block {
+    margin-left: 1.48rem;
+    margin-right: 0.64rem;
+}
+
+.layui-form-item {
+    /* margin-top: 0.3rem; */
+    margin-bottom: 0;
+}
+
+.layui-input,
+.layui-select,
+.layui-textarea {
+    height: 0.9rem;
+    background: rgba(255, 255, 255, 0.5);
+    color: #fff;
+    font-size: 0.3rem;
+    border: none;
+}
+
+.layui-textarea {
+    min-height: 70px !important;
+}
+
+.layui-layer-dialog .layui-layer-content {
+    padding: 30px 50px;
+    line-height: 35px;
+    font-size: 16px;
+}
+
+.layui-layer-btn .layui-layer-btn0,
+.layui-layer-btn .layui-layer-btn1 {
+    font-size: 0.3rem;
+}
+
+.layui-form-select dl dd.layui-this {
+    background-color: #339ed4;
+}
+
+/**************覆盖layui样式结束***************/
+
+/**************header样式开始****************/
+.header {
+    background: #39b0ec;
+    position: relative;
+    height: 0.88rem;
+    color: #fff;
+}
+
+.header .back {
+    position: absolute;
+    width: 1rem;
+    text-align: center;
+    float: left;
+    line-height: 0.88rem;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.header .back img {
+    width: 0.3rem;
+    height: 0.44rem;
+}
+
+.header p {
+    line-height: 0.88rem;
+    text-align: center;
+    font-size: 0.42rem;
+}
+
+.header .btn {
+    position: absolute;
+    top: 0;
+    right: 0.86rem;
+    z-index: 1;
+    height: 0.88rem;
+}
+
+.header .btn a {
+    display: inline-block;
+    line-height: 0.88rem;
+    font-size: 0.3rem;
+    color: #fff;
+    margin-right: 0.14rem;
+}
+
+.header .btn a img {
+    margin-right: 0.1rem;
+    width: 0.5rem;
+    height: 0.5rem;
+}
+
+/**************header样式结束****************/
+
+/*************zTree样式修改开始**************/
+.ztree {
+    padding: 26px 14px;
+}
+
+.ztree li {
+    line-height: 30px;
+    font-size: 18px;
+}
+
+.ztree li a {
+    margin-top: 3px;
+    /* color: #979797 !important; */
+}
+
+.ztree li span {
+    line-height: 24px;
+    font-size: 13px;
+}
+
+.ztree li span.button.chk {
+    width: 20px;
+    height: 20px;
+}
+
+.ztree li span.button.chk.checkbox_false_full_focus {
+    background-position: 0 -21px;
+}
+
+.ztree li span.button.chk.checkbox_true_full {
+    background-position: -21px 0;
+}
+
+.ztree li span.button.chk.checkbox_true_full_focus {
+    background-position: -21px -21px;
+}
+
+.ztree li span.button.chk.checkbox_true_part {
+    background-position: -21px -42px;
+}
+
+.ztree li span.button.switch {
+    width: 15px;
+    height: 15px;
+    margin-right: 10px;
+}
+
+.ztree li span.button.noline_open {
+    background-position: -42px 0px;
+}
+
+.ztree li span.button.noline_close {
+    background-position: -42px -16px;
+}
+
+/*************zTree样式修改结束**************/
+
+/**************选人弹框样式开始***************/
+.getUserMask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.getUserContent {
+    position: fixed;
+    width: 12.7rem;
+    height: 7.2rem;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    font-size: 0.24rem;
+    z-index: 1001;
+    border-radius: 0.3rem;
+    overflow: hidden;
+    background: #fff;
+}
+
+.leftTree {
+    width: 5.5rem;
+    height: 100%;
+    background: #f7f7fa;
+    overflow-y: auto;
+    /* color: red; */
+}
+
+.checkedList {
+    width: 7.2rem;
+    background: #eeeeee;
+}
+
+.checkedList h3 {
+    text-align: center;
+    line-height: 0.88rem;
+    color: #3f3f3f;
+    background: #e5e5e5;
+    font-size: 0.4rem;
+}
+
+.checkedList .checkedUsers {
+    height: 4.9rem;
+    overflow-y: auto;
+}
+
+.checkedList .checkedUsers li {
+    float: left;
+    width: 50%;
+    text-indent: 1em;
+    color: #3f3f3f;
+    line-height: 0.42rem;
+    font-size: 0.4rem;
+    padding: 0.28rem 0;
+}
+
+.checkedList .checkedUsers li img {
+    width: 0.4rem;
+    height: 0.4rem;
+    margin-left: 0.2rem;
+    margin-top: -0.02rem;
+}
+
+.checkedList .btns {
+    padding: 0.32rem 0;
+}
+
+.checkedList .btns li {
+    float: left;
+    width: 50%;
+    text-align: center;
+}
+
+.checkedList .btns li a {
+    display: block;
+    width: 2.08rem;
+    height: 0.8rem;
+    line-height: 0.8rem;
+    margin: 0 auto;
+    color: #fff;
+    background: #39b0ec;
+    border-radius: 0.1rem;
+    font-size: 0.34rem;
+}
+
+.getUserNoData {
+    line-height: 2rem !important;
+    width: 100% !important;
+    text-align: center;
+    text-indent: 0 !important;
+    font-size: 0.24rem;
+}
+
+/**************选人弹框样式结束***************/
+
+/**************选车等弹框样式开始*************/
+.getCarMask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.getCarContent {
+    position: fixed;
+    background: #eee;
+    width: 11rem;
+    height: 6.8rem;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    font-size: 0.24rem;
+    z-index: 1001;
+}
+
+.getCarContent .rightContent div {
+    display: none;
+}
+
+.getCarContent .rightContent div.isShow {
+    display: block;
+}
+
+.getCarContent .isHoverTitle {
+    color: #39b0ec;
+}
+
+.getCarContent .left {
+    width: 3rem;
+    height: 100%;
+    background: #f7f7fa;
+    overflow-y: auto;
+}
+
+.getCarContent .right {
+    width: 8rem;
+    height: 100%;
+}
+
+.getCarContent .right .rightContent {
+    height: 5.65rem;
+    overflow-y: auto;
+}
+
+.getCarContent .btns {
+    margin: 0.32rem 0;
+}
+
+.getCarContent .btns li {
+    float: left;
+    width: 50%;
+    text-align: center;
+}
+
+.getCarContent .btns li a {
+    display: block;
+    width: 1.8rem;
+    height: 0.5rem;
+    line-height: 0.5rem;
+    margin: 0 auto;
+    color: #fff;
+    background: #39b0ec;
+    border-radius: 0.1rem;
+    font-size: 0.24rem;
+}
+
+.getCarContent .leftTitle li {
+    height: 0.8rem;
+    line-height: 0.8rem;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+.getCarContent .rightContent div span {
+    width: 33%;
+    display: inline-block;
+    height: 1rem;
+    line-height: 1rem;
+    text-align: center;
+}
+
+/**************选车等弹框样式结束*************/
+
+/*************查看大图样式开始****************/
+.viewBigPic {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 60%;
+    height: 50%;
+    margin: auto;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.viewBigPic img {
+    width: 100%;
+    height: 100%;
+}
+
+.viewVideo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+#my-video {
+    width: 12rem;
+    height: 9rem;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    position: fixed;
+}
+
+video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    width: 36%;
+    z-index: 2;
+}
+
+/*************查看大图样式结束***************/
+
+/******下拉框样式*****/
+.layui-form-select dl dd,
+.layui-form-select dl dt {
+    line-height: 42px;
+    font-size: 20px;
+}
+
+/******下拦阻网列表*****/
+.scheduling .halfLeft:nth-child(2n-1) {
+    padding-right: 4px;
+}
+
+.scheduling .halfLeft:nth-child(2n) {
+    padding-left: 4px;
+}
+
+/********弹出看大图**********/
+.maskPic {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 3;
+}
+
+.picShow {
+    position: fixed;
+    background: #fff;
+    width: 12rem;
+    height: 9rem;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    z-index: 4;
+}
+
+.picShow .big {
+    margin: 0.1rem;
+    margin-bottom: 0rem;
+    height: 6.8rem;
+    line-height: 6.8rem;
+    overflow: hidden;
+    background: #000;
+    display: flex;
+    align-items: center;
+}
+
+.picShow .big img {
+    width: 100%;
+    align-items: center;
+}
+
+.smallWrap {
+    overflow-x: auto;
+}
+
+.picShow ul.small {
+    height: 2rem;
+}
+
+.picShow ul.small li {
+    float: left;
+    width: 1.9rem;
+    height: 1.9rem;
+    line-height: 1.9rem;
+    margin: 0.1rem;
+    margin-right: 0;
+    overflow: hidden;
+    border-radius: 0.1rem;
+    background: #000;
+    display: flex;
+    align-items: center;
+}
+
+.picShow ul.small li img {
+    width: 100%;
+    align-items: center;
+}
+
+#maskBigPic {
+    position: fixed;
+    background: #000000;
+    width: 100%;
+    height: 100%;
+    left: 0%;
+    top: 0%;
+    z-index: 10;
+    text-align: center;
+    display: flex;
+    align-items: center;
+}
+
+#maskBigPic img {
+    height: 96%;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.picClose {
+    background: rgba(0, 0, 0, 0.3);
+    position: absolute;
+    top: 0.1rem;
+    right: 0.1rem;
+    z-index: 13;
+    font-size: 0.38rem;
+    color: #fff;
+    padding: 0.05rem 0.2rem;
+    border: none;
+}
+
+/*覆盖下拉框的样式*/
+.layui-form-select dl dd,
+.layui-form-select dl dt {
+    font-size: 16px;
+}

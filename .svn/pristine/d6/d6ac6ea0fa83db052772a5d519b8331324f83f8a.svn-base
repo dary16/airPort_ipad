@@ -1,0 +1,386 @@
+﻿<!DOCTYPE html>
+<html class="no-js css-menubar" lang="zh-cn">
+
+    <head>
+        <title>机场</title>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <!-- 移动设备 viewport -->
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" />
+        <link href="./lib/layui/css/layui.css" rel="stylesheet" />
+        <!-- 第三方地图 -->
+        <script type="text/javascript" src="http://180.76.109.63/leaflet/lib/include-lib.js?time=20180905" libpath="http://180.76.109.63/leaflet/lib/" include="jquery,bootstrap,bootstrap-select,web-icons,haoutil,nprogress,toastr,turf,echarts-forleaflet,leaflet-mars,esri-leaflet,turf,leaflet-wfs"></script>
+        <link href="./css/index.css" rel="stylesheet" />
+        <!-- 轨迹回放 -->
+        <script type="text/javascript" src="./lib/map/leaflet-ant-path.js"></script>
+        <script type="text/javascript" src="./lib/map/MovingMarker.js"></script>
+        <link href="http://180.76.109.63/leaflet/css/style.css?time=20180905" rel="stylesheet" />
+        <!-- 公共js -->
+        <script type="text/javascript" src="./js/common.js"></script>
+        <!-- 第三方树结构 -->
+        <script type="text/javascript" src="./lib/zTree/js/jquery.ztree.all.min.js"></script>
+        <link href="./lib/zTree/css/zTreeStyle.css" rel="stylesheet" />
+        <!--layui-->
+        <script type="text/javascript" src="./lib/layui/layui.all.js"></script>
+        <!-- 当前页需要的js -->
+        <script type="text/javascript" src="./js/list-elecFence.js"></script>
+        <!-- 字体 -->
+        <link href="css/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <!-- 公共样式 -->
+        <link href="./css/style.css" rel="stylesheet" />
+        <link href="./css/list-sm.css" rel="stylesheet" />
+        <style>
+
+        </style>
+    </head>
+
+    <body>
+        <div id="centerDiv">
+            <div id="map" class="map"></div>
+        </div>
+        <div class="toolbar">
+            <ul>
+                <li>
+                    <img src="./img/index/weather.png" />
+                    天气
+                </li>
+                <li class="weilan">
+                    <img src="./img/index/weilan.png" />
+                    围栏
+                    <i class="layui-icon layui-icon-triangle-d" style="color: #fff;"></i>
+                </li>
+                <li class="tuceng">
+                    <img src="./img/index/layer.png" />
+                    图层
+                    <i class="layui-icon layui-icon-triangle-d" style="color: #fff;"></i>
+                </li>
+                <li>
+                    <img src="./img/index/tool.png" />
+                    工具
+                    <i class="layui-icon layui-icon-triangle-d" style="color: #fff;"></i>
+                </li>
+            </ul>
+        </div>
+        <div onclick="L.widget.activate('lib/map/widgets/manageBasemaps/widget.js', true)" style="position: absolute;left: 5px; bottom: 25px; width: 36px; height: 36px;padding:5px; background-color: rgba(0, 0, 0, 0.3);z-index:9999;"><img src="http://180.76.109.63/leaflet/lib/leaflet-mars/images/layers.png" /></div>
+        <div id="toolbar" style="position: absolute;top: 20px;left:350px;z-index:99999;">
+            <button class="btn btn-primary" id="weather" style="display: none;">天气</button>
+            <button class="btn btn-primary" id="polygon">圈选</button>
+            <button class="btn btn-primary" id="nearby">附近</button>
+        </div>
+        </div>
+        <div id="interGroup" style="display: none;">
+            <ul id="tree" class="ztree"></ul>
+        </div>
+        <div class="orgGroup" style="display: none;">
+            <ul id="organizeTree" class="ztree"></ul>
+        </div>
+        <div id="weatherList" style="display: none;"></div>
+        <div id="chooseLayer" style="display: none;">
+            <form action="" class="layui-form">
+                <div class="layui-col-xs6 layui-col-sm6 layui-col-md5">
+                    <div class="layui-form-item">
+                        <div class="layui-input-block" id="leftCheck">
+                            <input type="checkbox" name="like[all]" title="全部显示" lay-filter="all" lay-skin="primary">
+                            <input type="checkbox" class="leftChecked" name="like[car]" title="车辆" lay-filter="car" lay-skin="primary">
+                            <input type="checkbox" class="leftChecked" name="like[people]" title="人员" lay-filter="people" lay-skin="primary">
+                            <!-- <input type="checkbox" class="leftChecked" name="like[equip]" title="装备" lay-filter="equip" lay-skin="primary">
+                            <input type="checkbox" class="leftChecked" name="like[monitor]" title="监控" lay-filter="monitor" lay-skin="primary"> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-xs6 layui-col-sm6 layui-col-md5">
+                    <div class="layui-form-item">
+                        <div class="layui-input-block" id="org" style="padding-bottom:10px;">
+                            <input type="checkbox" name="like[allRight]" title="全部显示" lay-filter="right" lay-skin="primary">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div id="electricFence" style="display: block;">
+            <div class="contentList" style="background: #fff;">
+                <div>
+                    <form id="form" class="clearfix layui-form">
+                        <div class="itemLeft">
+                            <label class="title">电子围栏</label>
+                        </div>
+                        <div class="itemLeft">
+                            <input type="checkbox" class="leftChecked" name="like[box]" title="围栏" lay-filter="box" lay-skin="switch">
+                        </div>
+                        <div class="itemRight">
+                            <input type="button" class="btn btn-primary" id="addEleCircle" value="新建电子围栏">
+                        </div>
+                    </form>
+                </div>
+                <ul class="title" id="testTitle">
+                    <!--title-->
+                </ul>
+                <div class="list">
+                    <!--list-->
+                </div>
+            </div>
+            <div id="pagination">
+                <!--分页-->
+            </div>
+        </div>
+        <div class="nearby" style="display: none;">
+            <h3 class="close">关闭</h3>
+            <div class="distance">
+                <label class="radio-inline">
+                    <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> 500米
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> 1000米
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3" checked> 2000米
+                </label>
+            </div>
+            <ul class="infoList">
+                <li>
+                </li>
+            </ul>
+        </div>
+        <script src="js/index.js"></script>
+        <script>
+            var map;
+            var markers = [];
+            $(document).ready(function() {
+                if (window.parent && window.parent.setStyleByTheme) {
+                    haoutil.storage.add('theme', 'blue');
+                    window.parent.setStyleByTheme();
+                }
+                initMap();
+                var uid = getParam('userId');
+                userId = uid;
+            });
+
+            //根据配置文件初始化系统界面
+            function initMap() {
+                var request = haoutil.system.getRequest();
+                var configfile = './lib/map/config.json';
+                if (request.config) configfile = '../leaflet-example/config/' + request.config + '.json';
+
+                haoutil.loading.show();
+
+                L.mars.createMap({
+                    id: 'map',
+                    url: configfile + '?time=20180905',
+                    layerToMap: layerToMap,
+                    success: function(_map, gisdata, jsondata) {
+                        haoutil.loading.hide();
+
+                        map = _map;
+
+                        //如果配置默认有图层控制控件，移除（与widget功能重复）
+                        if (gisdata.controls && gisdata.controls.layers) {
+                            map.removeControl(gisdata.controls.layers);
+                        }
+
+                        //初始化widget管理器
+                        if (haoutil.isutil.isNotNull(request.widget)) {
+                            jsondata.widget.widgetsAtStart = [];
+                        }
+                        L.widget.init(_map, jsondata.widget);
+
+                        //如果url传参，激活对应widget
+                        if (haoutil.isutil.isNotNull(request.widget)) L.widget.activate(request.widget);
+
+                        //如果有xyz传参，进行定位
+                        if (haoutil.isutil.isNotNull(request.x) && haoutil.isutil.isNotNull(request.y) && haoutil.isutil.isNotNull(request.z)) {
+                            var x = Number(request.x);
+                            var y = Number(request.y);
+                            var z = Number(request.z);
+                            map.setView([y, x], z);
+                        }
+
+                        initWork();
+                    }
+                });
+            }
+
+            //当前页面业务相关
+            function initWork() {
+
+                //初始化画图工具
+                {
+                    InitDraw();
+                }
+            }
+
+            //初始化画图工具
+            var drawTool;
+
+            function InitDraw() {
+                if (drawTool != null) return;
+                var that = this;
+                drawTool = new L.mars.Draw({
+                    map: this.map,
+                    isOnly: true,
+                    hasDel: true,
+                    onEvnet: true,
+                    onStartEditing: function(layer) {},
+                    onStopEditing: function(featurelayer) {
+                        //多边形转成string
+                        var polygonstring = JSON.stringify(featurelayer.toGeoJSON());
+                        //把string转成GeoJson格式
+                        var polygonJson = JSON.parse(polygonstring);
+                        //判断所绘制类型
+                        if (featurelayer.properties.type == 'rectangle') {
+                            //圈选之后的代码先判断有没有点在内，如果没有，return false,如果有则判断是建组还是群呼
+                            //与点位进行相交查询
+                            $.each(markers, function(i, m) {
+                                console.log(markers, "markers");
+                                var latlng = m.getLatLng();
+                                var coor = [latlng.lng, latlng.lat];
+                                var isIntersect = Intersect(coor, polygonJson.geometry.coordinates);
+                                //console.log(coor, polygonJson.geometry.coordinates);
+
+                                //如果相交输出标注的ID
+                                if (isIntersect) {
+                                    //console.log(m.sip);
+                                    sipArr.push(m.sip);
+                                    sipArr.push(userId);
+                                }
+                            });
+
+                            var arr2 = rep(sipArr);
+                            var str = '';
+                            if (arr2.length > 0) {
+                                str += '<form class="layui-form" id="groupForm">';
+                                str += '<div class="layui-form-item">';
+                                str += '<label class="layui-form-label">组名</label>';
+                                str += '<div class="layui-input-block">';
+                                str += '<input type="text" name="title" lay-verify="title" id="groupName" autocomplete="off" placeholder="请输入组名称" class="layui-input">';
+                                str += '</div></div>';
+                                str += '<div class="layui-form-item">';
+                                str += '<label class="layui-form-label">是否录音</label>';
+                                str += '<div class="layui-input-block">';
+                                str += '<select name="interest" lay-filter="aihao" id="inOut">';
+                                str += '<option value="y" selected="">是</option>';
+                                str += '<option value="n">否</option>';
+                                str += '</select></div></div>';
+
+                                formPopup(
+                                    '添加组',
+                                    str,
+                                    '', {
+                                        btn1: '确定',
+                                        btn2: '取消'
+                                    },
+                                    function(obj) {
+                                        var groupList = $('#groupForm').serializeArray();
+                                        var groupTitle = groupList[0].value.replace(/(^\s*)|(\s*$)/g, '');
+                                        var groupType = groupList[1].value;
+
+                                        if (groupTitle != '' && groupTitle != undefined && groupTitle != null) {
+                                            getRequest(
+                                                'airPortService/systemPpt/add',
+                                                'post', {
+                                                    userId: userId,
+                                                    ptt_recording: groupType,
+                                                    ptt_name: groupTitle,
+                                                    ptt_type: '临时组',
+                                                    ptt_member: arr2.toString()
+                                                },
+                                                function(data) {
+                                                    drawTool.clearDraw();
+                                                    obj.remove();
+                                                    layer.msg('建组成功！');
+                                                }
+                                            );
+                                        } else {
+                                            layer.msg('请输入组名称！');
+                                        }
+                                    },
+                                    function(obj) {
+                                        obj.remove();
+                                        drawTool.clearDraw();
+                                    });
+                                form.render();
+                            } else if (arr2.length == 0) {
+                                layer.msg('圈选内无人员，建组失败！');
+                                drawTool.clearDraw();
+                            }
+                        } else if (featurelayer.properties.type == 'polygon') {
+                            var str = '';
+                            if (drawType == 'eleType') {
+                                str += '<form class="layui-form" id="wlForm">';
+                                str += '<div class="layui-form-item">';
+                                str += '<label class="layui-form-label">名称</label>';
+                                str += '<div class="layui-input-block">';
+                                str += '<input type="text" name="title" lay-verify="title" id="xlName" autocomplete="off" placeholder="请输入电子围栏名称" class="layui-input">';
+                                str += '</div></div>';
+                                str += '<div class="layui-form-item">';
+                                str += '<label class="layui-form-label">状态</label>';
+                                str += '<div class="layui-input-block">';
+                                str += '<select name="interest" lay-filter="aihao" id="inOut">';
+                                str += '<option value="禁入" selected="">禁入</option>';
+                                str += '<option value="禁出">禁出</option>';
+                                str += '</select></div></div>';
+
+                                formPopup(
+                                    '添加电子围栏',
+                                    str,
+                                    '', {
+                                        btn1: '确定',
+                                        btn2: '取消'
+                                    },
+                                    function(obj) {
+                                        var wlList = $('#wlForm').serializeArray();
+                                        var wlTitle = wlList[0].value.replace(/(^\s*)|(\s*$)/g, '');
+                                        var wlType = wlList[1].value;
+                                        var points = polygonJson.geometry.coordinates;
+
+                                        if (wlTitle != '' && wlTitle != undefined && wlTitle != null) {
+                                            getRequest(
+                                                'airPortService/busElectronicFence/add',
+                                                'post', {
+                                                    userId: userId,
+                                                    fence_type: wlType,
+                                                    fence_points: points,
+                                                    fence_name: wlTitle
+                                                },
+                                                function(data) {
+                                                    drawTool.clearDraw();
+                                                    obj.remove();
+                                                    layer.msg('新建围栏成功！');
+                                                    getPlanListFn();
+                                                }
+                                            );
+                                        } else {
+                                            layer.msg('请输入围栏名称！');
+                                        }
+                                    },
+                                    function(obj) {
+                                        obj.remove();
+                                        drawTool.clearDraw();
+                                    });
+                                form.render();
+                            }
+                        } else if (featurelayer.properties.type == 'polyline') {
+                            if (drawType == 'lineType') {
+                                //console.log('线');
+                            }
+                        }
+                    }
+                });
+                this.map.addLayer(drawTool.getLayer());
+                return drawTool;
+            }
+
+            //自定义图层添加方法
+            function layerToMap(config, layer) {}
+
+            //外部页面调用
+            function activateWidget(item) {
+                L.widget.activate(item);
+            }
+
+            function activateFunByMenu(fun) {
+                eval(fun);
+            }
+        </script>
+    </body>
+
+</html>

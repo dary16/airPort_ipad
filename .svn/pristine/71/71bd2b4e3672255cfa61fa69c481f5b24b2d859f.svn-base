@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html class="no-js css-menubar" lang="zh-cn">
+    <head>
+        <title>鸟情上报详情</title>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <!-- 移动设备 viewport -->
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" />
+        <!-- 第三方库 -->
+        <script type="text/javascript" src="./lib/jquery-1.8.3.min.js"></script>
+        <script type="text/javascript" src="./lib/layui/layui.all.js"></script>
+        <link rel="stylesheet" href="./lib/layui/css/layui.css" />
+        <script type="text/javascript" src="./lib/zTree/js/jquery.ztree.all.min.js"></script>
+        <link href="./lib/zTree/css/zTreeStyle.css" rel="stylesheet" />
+        <!-- 公共js -->
+        <script type="text/javascript" src="./js/common.js"></script>
+        <!-- 当前页需要的js -->
+        <script type="text/javascript" src="./js/list-count-bird-view.js"></script>
+        <!-- 字体 -->
+        <link href="css/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <!-- 公共样式 -->
+        <link href="./css/style.css" rel="stylesheet" />
+        <link href="./css/list-edit.css" rel="stylesheet" />
+    </head>
+
+    <body>
+        <div class="scheduling">
+            <div class="header">
+                <a id="comBack" class="back" href="javascript:;"> <img src="img/back.png" /> </a>
+                <p>鸟情上报详情</p>
+            </div>
+            <div class="contentEdit">
+                <form id="form" class="layui-form clearfix">
+                    <div class="searchItem">
+                        <label class="title">鸟的种类：</label>
+                        <div class="inputBlock"><input class="layui-input" type="text" name="birdType" placeholder="请输入车牌号" autocomplete="off" /></div>
+                    </div>
+                    <div class="searchItem">
+                        <label class="title">高度：</label>
+                        <div class="inputBlock"><input class="layui-input" type="text" name="height" placeholder="请输入车牌号" autocomplete="off" /></div>
+                    </div>
+                    <div class="searchItem">
+                        <label class="title">上报人：</label>
+                        <div class="inputBlock"><input class="layui-input" type="text" name="userName" placeholder="请输入车牌号" autocomplete="off" /></div>
+                    </div>
+                    <div class="searchItem">
+                        <label class="title">上报时间：</label>
+                        <div class="inputBlock"><input class="layui-input" type="text" name="nowTime" placeholder="请输入车牌号" autocomplete="off" /></div>
+                    </div>
+                    <div class="searchItem w100">
+                        <label class="title">鸟的位置：</label>
+                        <div class="inputBlock"><textarea name="birdPosition" placeholder="请输入内容" class="layui-textarea"></textarea></div>
+                    </div>
+                    <div class="searchItem w100">
+                        <label class="title">备注：</label>
+                        <div class="inputBlock"><textarea name="comment" placeholder="请输入内容" class="layui-textarea"></textarea></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

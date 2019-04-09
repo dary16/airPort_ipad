@@ -1,0 +1,66 @@
+var addData = {};
+var editData = {};
+var isEdit = false;
+var curId;
+$(function() {
+    isEdit = getParam('edit');
+    curId = getParam('id');
+    laydate.render({
+        elem: '#manufactureDate',
+        type: 'date',
+        done: function(value, date, endDate) {}
+    });
+
+    form.render('select');
+
+    if (isEdit || isEdit == 'true') {
+        getEditDataFn();
+        $(".header p").html("编辑");
+    }
+
+    //完成按钮
+    $('.searchBtn').on('click', function() {
+        var getFormData = $('#form').serializeArray();
+        getFormData.forEach(function(item) {
+            addData[item.name] = item.value;
+        });
+        if (!addData.carNumber) {
+            layer.msg('请输入车牌！');
+            return false;
+        }
+
+        if (isEdit || isEdit == 'true') {
+            //编辑
+            $.extend(editData, addData);
+        }
+
+        if (isEdit || isEdit == 'true') {
+            //编辑
+            getRequest('airPortService/busMachineryEquipment/add', 'post', editData, function(data) {
+                layer.msg('编辑成功！');
+                window.location.href = 'list-equipment.html';
+            });
+        } else {
+            //新增
+            getRequest('airPortService/busMachineryEquipment/add', 'post', addData, function(data) {
+                layer.msg('新增成功！');
+                window.location.href = 'list-equipment.html';
+            });
+        }
+    });
+});
+
+//获取编辑的数据
+function getEditDataFn() {
+    getRequest('airPortService/busMachineryEquipment/detail', 'post', {
+        id: curId
+    }, function(data) {
+        editData = data;
+        $('.contentEdit')
+            .find('input,select')
+            .each(function(i, v) {
+                $(v).val(editData[v.name]);
+            });
+        form.render('select');
+    });
+}

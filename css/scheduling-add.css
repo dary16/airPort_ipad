@@ -1,0 +1,91 @@
+input::-webkit-input-placeholder {
+    /* placeholder颜色  */
+    color: #a8a8a8;
+    /* placeholder字体大小  */
+    font-size: 0.3rem;
+}
+.layui-input,
+.layui-select,
+.layui-textarea {
+    border: 1px solid #bfc0c0;
+    background: none;
+    color: #383838;
+}
+.formInter {
+    padding: 0.46rem 0 0.28rem 1.5rem;
+    background: #eeeeee;
+}
+
+.formInter .input-block {
+    width: 3.58rem;
+    float: left;
+    margin-right: 0.8rem;
+    margin: 0.24rem 0.8rem 0.24rem 0;
+}
+
+.formInter .input-show {
+    width: 3.58rem;
+    float: left;
+    height: 0.9rem;
+    line-height: 0.9rem;
+    color: #383838;
+    font-size: 0.3rem;
+    margin: 0.24rem 0;
+}
+
+.planBtn {
+    overflow: hidden;
+}
+
+.planBtn a {
+    display: block;
+    width: 2rem;
+    height: 0.56rem;
+    background: #39b0ec;
+    border-radius: 0.1rem;
+    color: #fff;
+    font-size: 0.3rem;
+    text-align: center;
+    line-height: 0.56rem;
+    float: right;
+    margin-right: 1.4rem;
+}
+.listShow {
+    margin: 0.15rem 0.25rem;
+    border-top: 1px solid #acacac;
+    border-left: 1px solid #acacac;
+}
+
+.listShow .title {
+    background: #339ed4;
+    height: 0.92rem;
+    line-height: 0.92rem;
+    color: #fff;
+    font-size: 0.36rem;
+}
+
+.listShow .title img {
+    width: 0.4rem;
+    height: 0.44rem;
+    margin-left: 0.6rem;
+    margin-right: 0.2rem;
+}
+
+.listShow .block {
+    float: left;
+    width: 20%;
+    border-right: 1px solid #acacac;
+    border-bottom: 1px solid #acacac;
+    text-align: center;
+    color: #595757;
+    font-size: 0.24rem;
+    padding: 0.24rem;
+}
+
+.listShow .block p {
+    line-height: 0.42rem;
+}
+
+.listShow .block ul li {
+    line-height: 0.42rem;
+}

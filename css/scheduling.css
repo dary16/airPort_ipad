@@ -1,0 +1,109 @@
+.planMask {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+}
+
+.planContent {
+    position: fixed;
+    width: 60%;
+    height: 60%;
+    background: #fff;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    z-index: 3;
+}
+
+.listShow ul {
+    overflow: hidden;
+}
+
+.listShow ul li {
+    float: left;
+    width: 23%;
+}
+
+.listShow ul li:last-child {
+    width: 8%;
+}
+
+.autoList dd {
+    line-height: 30px;
+}
+
+.contentList {
+}
+.contentList .title {
+    overflow: hidden;
+}
+.contentList .title li {
+    float: left;
+    font-size: 0.42rem;
+    color: #0383c4;
+    line-height: 1.36rem;
+    text-align: center;
+    overflow: hidden; /*内容超出宽度时隐藏超出部分的内容 */
+    text-overflow: ellipsis; /* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+    white-space: nowrap; /*不换行 */
+}
+.contentList .list ul {
+    border-top: 1px solid #dbdbdb;
+    overflow: hidden;
+}
+.contentList .list ul:nth-child(2n-1) {
+    background: #f6f6f6;
+}
+.contentList .list ul li {
+    float: left;
+    font-size: 0.42rem;
+    color: #4c4c4c;
+    line-height: 1.36rem;
+    text-align: center;
+    overflow: hidden; /*内容超出宽度时隐藏超出部分的内容 */
+    text-overflow: ellipsis; /* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+    white-space: nowrap; /*不换行 */
+}
+.contentList .title li:nth-child(1),
+.contentList .list ul li:nth-child(1) {
+    width: 12%;
+}
+.contentList .title li:nth-child(2),
+.contentList .list ul li:nth-child(2) {
+    width: 27%;
+}
+.contentList .title li:nth-child(3),
+.contentList .list ul li:nth-child(3) {
+    width: 12%;
+}
+.contentList .title li:nth-child(4),
+.contentList .list ul li:nth-child(4) {
+    width: 12%;
+}
+.contentList .title li:nth-child(5),
+.contentList .list ul li:nth-child(5) {
+    width: 25%;
+}
+.contentList .title li:nth-child(6),
+.contentList .list ul li:nth-child(6) {
+    width: 12%;
+}
+.checkPlan {
+    width: 1.15rem;
+    height: 0.54rem;
+    line-height: 0.54rem;
+    text-align: center;
+    color: #fff;
+    font-size: 0.3rem;
+    background: #39b0ec;
+    display: block;
+    margin: 0.41rem auto 0 auto;
+    border-radius: 0.1rem;
+    cursor: pointer;
+}

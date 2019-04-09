@@ -1,0 +1,17 @@
+.contentList {
+    border-bottom: 1px solid #333;
+}
+
+.ul-title li {
+    display: inline-block;
+    width: 25%;
+}
+
+.ul-content li {
+    display: inline-block;
+    width: 25%;
+}
+
+.eachList {
+    font-size: 20px;
+}

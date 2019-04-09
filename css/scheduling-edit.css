@@ -1,0 +1,89 @@
+.listShow {
+    margin: 0.15rem 0.25rem;
+    border-top: 1px solid #acacac;
+    border-left: 1px solid #acacac;
+    margin-bottom: 0.3rem;
+}
+
+.listShow .title {
+    background: #339ed4;
+    height: 0.92rem;
+    line-height: 0.92rem;
+    color: #fff;
+    font-size: 0.36rem;
+}
+
+.listShow .title img {
+    width: 0.4rem;
+    height: 0.44rem;
+    margin-left: 0.6rem;
+    margin-right: 0.2rem;
+}
+
+.listShow .block {
+    float: left;
+    width: 20%;
+    border-right: 1px solid #acacac;
+    border-bottom: 1px solid #acacac;
+    text-align: center;
+    color: #595757;
+    font-size: 0.24rem;
+    padding: 0.24rem;
+    position: relative;
+}
+
+.listShow .block p {
+    line-height: 0.42rem;
+}
+
+.listShow .block ul li {
+    line-height: 0.42rem;
+}
+
+.editBtn {
+    position: absolute;
+    width: 0.3rem;
+    height: 0.3rem;
+    top: 0.14rem;
+    right: 0.12rem;
+    z-index: 1;
+    display: none;
+}
+.editBtn img {
+    width: 0.3rem;
+    height: 0.3rem;
+}
+.layui-form-label {
+    width: 1.68rem;
+}
+.layui-input-block {
+    margin-left: 1.78rem;
+}
+.contentEdit .topic {
+    height: 1.12rem;
+    line-height: 1.12rem;
+    background: #eeeeee;
+    color: #339ed4;
+    font-size: 0.3rem;
+    padding: 0 0.86rem;
+}
+.contentEdit .topic span {
+    margin-right: 0.3rem;
+}
+.specialBtn {
+    text-align: left;
+}
+
+.layui-input,
+.layui-select,
+.layui-textarea {
+    height: 0.5rem;
+    background: rgba(255, 255, 255, 0.5);
+    color: #fff;
+    font-size: 0.3rem;
+    border: none;
+}
+.layui-form-item {
+    margin-top: 0.3rem;
+    margin-bottom: 0;
+}

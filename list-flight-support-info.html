@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html class="no-js css-menubar" lang="zh-cn">
+
+    <head>
+        <title>机场-保障计划</title>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <!-- 移动设备 viewport -->
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" />
+        <!-- 第三方库 -->
+        <script type="text/javascript" src="./lib/jquery-1.8.3.min.js"></script>
+        <script type="text/javascript" src="./lib/layui/layui.all.js"></script>
+        <link rel="stylesheet" href="./lib/layui/css/layui.css" />
+        <script type="text/javascript" src="./lib/zTree/js/jquery.ztree.all.min.js"></script>
+        <link href="./lib/zTree/css/zTreeStyle.css" rel="stylesheet" />
+        <!-- 公共js -->
+        <script type="text/javascript" src="./js/common.js"></script>
+        <!-- 当前页需要的js -->
+        <script type="text/javascript" src="./js/list-flight-support-info.js"></script>
+        <!-- 字体 -->
+        <link href="css/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <!-- 公共样式 -->
+        <link href="./css/style.css" rel="stylesheet" />
+        <link href="./css/list-edit.css" rel="stylesheet" />
+        <link href="./css/ul-list.css" rel="stylesheet" />
+    </head>
+
+    <body>
+        <div class="scheduling">
+            <div class="header">
+                <a id="comBack" class="back" href="javascript:;"> <img src="img/back.png" /> </a>
+                <p>详情</p>
+            </div>
+            <div class="contentEdit">
+                <form id="form" style="overflow: hidden;">
+                    <div class="searchItem">
+                        <label class="title">指挥员：</label>
+                        <div class="inputBlock"><input class="layui-input" type="text" name="commanderName" readonly /></div>
+                    </div>
+                    <div class="searchItem">
+                        <label class="title">值班参谋：</label>
+                        <div class="inputBlock"><input class="layui-input" type="text" name="dutyStaffName" readonly /></div>
+                    </div>
+                    <div class="searchItem">
+                        <label class="title">飞行计划：</label>
+                        <div class="inputBlock"><input style="text-align:left" class="layui-input" type="text" name="title" readonly /></div>
+                    </div>
+                    <div class="searchItem">
+                        <label class="title">备注：</label>
+                        <div class="inputBlock"><input class="layui-input" type="text" name="comment" readonly /></div>
+                    </div>
+                    <div class="searchItem">
+                        <label class="title">状态：</label>
+                        <div class="inputBlock">
+                            <select class="layui-select selectOpt" id="statusList" name="status">
+                                <option value="正常" selected>正常</option>
+                                <option value="损坏">损坏</option>
+                            </select>
+                        </div>
+                </form>
+            </div>
+            <div class="layui-tab layui-tab-card">
+                <ul class="layui-tab-title clearfix" id="tabList">
+                </ul>
+                <div class="layui-tab-content" id="tabContent">
+                    <div class="layui-tab-item layui-show">
+                        <div class="eachList">
+                            <ul class="ul-title clearfix">
+
+                            </ul>
+                            <ul class="ul-content clearfix">
+                                <li>
+                                    <input class="layui-input" type="text" name="arrivalTime" />
+                                </li>
+                                <li>
+                                    <input class="layui-input" type="text" name="arrivalPlace" />
+                                </li>
+                                <li>
+                                    <input class="layui-input" type="text" name="carType" />
+                                </li>
+                                <li>
+                                    <input class="layui-input" type="text" name="carNum" />
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </body>
+
+</html>

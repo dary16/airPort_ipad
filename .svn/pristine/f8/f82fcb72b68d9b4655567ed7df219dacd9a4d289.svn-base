@@ -1,0 +1,258 @@
+var setTitleArr = [];
+var searchData = {};
+var curPage = 1;
+var curPage1 = 1;
+var curPage2 = 1;
+var pageSize = 5;
+var pageSize1 = 5;
+var pageSize2 = 5;
+var pageCount = 0;
+var pageCount1 = 0;
+var pageCount2 = 0;
+var data = [];
+var idsArr = [];
+var editData = {};
+$(function() {
+    setTitleArr = [{
+            title: '时间',
+            width: '40%'
+        },
+        {
+            title: '质量状况',
+            width: '20%'
+        },
+        {
+            title: '立放状态',
+            width: '20%'
+        },
+        {
+            title: '检查人',
+            width: '20%'
+        }
+    ];
+    var titleHtml = '';
+    setTitleArr.forEach(function(item) {
+        titleHtml += '<li style="width:' + item.width + '">' + item.title + '</li>';
+    });
+    $('#topTitle1').html(titleHtml);
+    $('#topTitle2').html(titleHtml);
+    //获取列表
+    getPlanListFn();
+
+    laydate.render({
+        elem: '#useDate',
+        type: 'date',
+        done: function(value, date, endDate) {}
+    });
+
+});
+
+function getPlanListFn(serObj) {
+    var defObj = {
+        curPage: curPage,
+        pageSize: pageSize
+    };
+    if (serObj != undefined || serObj != 'undefined') {
+        $.extend(defObj, serObj);
+    }
+    var html = '';
+    getRequest('airPortService/busArresterNet/list', 'post', defObj, function(data) {
+        pageCount = data.records;
+        data = data.rows;
+        if (data.length != 0) {
+            data.forEach(function(item) {
+                html += '<div class="halfLeft">';
+                html += '<div class="formHeader">';
+                html += '<h3><input class="layui-input" type="text" name="name" disabled value="' + item.name + '"/></h3>';
+                html += '<button type="button" class="editBtn">详情</button>';
+                html += '</div>';
+                html += '<form id="form" class="layui-form clearfix">';
+                html += '<div class="halfItems">';
+                html += '<label class="title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;状态：</label>';
+                html += '<div class="inputHalf">';
+                html += '<input class="layui-input" type="text" name="currentState" disabled  value="' + item.currentState + '"/>';
+                html += '</div>';
+                html += '</div>';
+                html += '<div class="halfItems">';
+                html += '<label class="title">时间：</label>';
+                html += '<div class="inputHalf time">';
+                html += '<input id="useDate" class="layui-input" type="text" disabled  name="currentTime" value="' + item.currentTime + '"/></div>';
+                html += '</div>';
+                html += '<div class="halfItems">';
+                html += '<label class="title">质量状况：</label>';
+                html += '<div class="inputHalf" style="width:50%;">';
+                html += '<input style="text-align:left" class="layui-input" type="text" name="status" disabled  value="' + item.status + '"/></div>';
+                html += '</div>';
+                html += '<div class="halfItems">';
+                html += '<label class="title">型号：</label>';
+                html += '<div class="inputHalf">';
+                html += '<input class="layui-input" type="text" name="material" disabled  value="' + item.material + '"/>';
+                html += '</div>';
+                html += '</div>';
+                html += '<div class="halfItems" id="all">';
+                html += '<label class="title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位置：</label>';
+                html += '<div class="inputHalf"><input class="layui-input" id="startTime" type="text" disabled  name="lon" value="' + item.lon + ',' + item.lng + '"/></div>';
+                html += '</div>';
+                html += '</form>';
+                html += '</div>';
+                idsArr.push(item.id);
+            });
+            $('.contentList').html(html);
+            getPlanListFn1();
+            getPlanListFn2();
+        } else {
+            $('.contentList').html('<li class="noData">暂无数据！</li>');
+        }
+        //操作 编辑 点击事件
+        $('.editBtn').each(function(i, v) {
+            $(v).on('click', function() {
+                var titleName;
+                getRequest('airPortService/busArresterNet/detail', 'post', {
+                    id: data[i].id
+                }, function(data) {
+                    editData = data;
+                    var spec = editData.lon + ',' + editData.lng;
+                    titleName = editData.name;
+                    $('.infoContent')
+                        .find('input')
+                        .each(function(i, v) {
+                            $(v).val(editData[v.name]);
+                        });
+                    $('#special').val(spec);
+                    layer.open({
+                        type: 1,
+                        area: ['13rem', '7rem'],
+                        title: [titleName, 'text-align:center;background:#dcdcdc;'],
+                        skin: 'layui-grey',
+                        content: $('.infoContent'),
+                        cancel: function(index) {
+                            layer.close(index);
+                            $('.infoContent').hide();
+                        }
+                    })
+                });
+            });
+        });
+
+        //操作 删除 点击事件
+        $('.delBtn').each(function(i, v) {
+            $(v).on('click', function() {
+                layer.confirm('确定删除吗？', function(index) {
+                    layer.close(index);
+                    getRequest('airPortService/busArresterNet/del', 'post', {
+                        ids: data[i].id
+                    }, function(data) {
+                        layer.msg('删除成功！');
+                        window.location.reload();
+                    });
+                });
+            });
+        });
+    });
+}
+
+//拦阻网1
+function getPlanListFn1() {
+    var defObj = {
+        curPage: curPage1,
+        pageSize: pageSize1,
+        arresterNetId: idsArr[0]
+    };
+    var html = '';
+    getRequest('airPortService/busArresterNetLog/list ', 'post', defObj, function(data) {
+        pageCount1 = data.records;
+        data = data.rows;
+        if (data.length != 0) {
+            data.forEach(function(item) {
+                html += '<ul>';
+                html += '<li style="width:' + setTitleArr[0].width + '">' + item.checkTime + '</li>';
+                // html += '<li style="width:' + setTitleArr[1].width + '">' + item.status + '</li>';
+                if (item.status == '合格') {
+                    html += '<li class="green" style="width:' + setTitleArr[1].width + '">' + item.status + '</li >';
+                } else {
+                    html += '<li class="red" style="width:' + setTitleArr[1].width + '">' + item.status + '</li >';
+                }
+                html += '<li style="width:' + setTitleArr[2].width + '">' + item.currentState + '</li>';
+                html += '<li style="width:' + setTitleArr[3].width + '">' + item.checker + '</li>';
+                html += '</ul>';
+            });
+            $('.contentHalfList1 .list').html(html);
+            //分页
+            getPaginationFn1();
+        } else {
+            $('.contentHalfList1 .list').html('<li class="noData">暂无数据！</li>');
+            $('#pagination1').css('height', '1.21rem');
+        }
+    });
+}
+
+function getPlanListFn2() {
+    var defObj = {
+        curPage: curPage2,
+        pageSize: pageSize2,
+        arresterNetId: idsArr[1]
+    };
+    var html = '';
+    getRequest('airPortService/busArresterNetLog/list ', 'post', defObj, function(data) {
+        pageCount2 = data.records;
+        data = data.rows;
+        if (data.length != 0) {
+            data.forEach(function(item) {
+                html += '<ul>';
+                html += '<li style="width:' + setTitleArr[0].width + '">' + item.checkTime + '</li>';
+                // html += '<li style="width:' + setTitleArr[1].width + '">' + item.status + '</li>';
+                if (item.status == '合格') {
+                    html += '<li class="green" style="width:' + setTitleArr[1].width + '">' + item.status + '</li >';
+                } else {
+                    html += '<li class="red" style="width:' + setTitleArr[1].width + '">' + item.status + '</li >';
+                }
+                html += '<li style="width:' + setTitleArr[2].width + '">' + item.currentState + '</li>';
+                html += '<li style="width:' + setTitleArr[3].width + '">' + item.checker + '</li>';
+                html += '</ul>';
+            });
+            $('.contentHalfList2 .list').html(html);
+            //分页
+            getPaginationFn2();
+        } else {
+            $('.contentHalfList2 .list').html('<li class="noData">暂无数据！</li>');
+            $('#pagination2').css('height', '1.21rem');
+        }
+    });
+}
+
+/**分页方法**/
+function getPaginationFn1() {
+    $('#pagination1').css('display', 'block');
+    laypage.render({
+        elem: 'pagination1',
+        count: pageCount1,
+        limit: pageSize1,
+        layout: ['prev', 'page', 'next'],
+        theme: '#0383c4',
+        curr: curPage1,
+        jump: function(obj, first) {
+            if (!first) {
+                curPage1 = obj.curr;
+                getPlanListFn1(searchData);
+            }
+        }
+    });
+}
+
+function getPaginationFn2() {
+    $('#pagination2').css('display', 'block');
+    laypage.render({
+        elem: 'pagination2',
+        count: pageCount2,
+        limit: pageSize2,
+        layout: ['prev', 'page', 'next'],
+        theme: '#0383c4',
+        curr: curPage2,
+        jump: function(obj, first) {
+            if (!first) {
+                curPage2 = obj.curr;
+                getPlanListFn2(searchData);
+            }
+        }
+    });
+}

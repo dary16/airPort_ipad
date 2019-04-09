@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html class="no-js css-menubar" lang="zh-cn">
+
+    <head>
+        <title>机械装备维护</title>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <!-- 移动设备 viewport -->
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" />
+        <!-- 第三方库 -->
+        <script type="text/javascript" src="./lib/jquery-1.8.3.min.js"></script>
+        <script type="text/javascript" src="./lib/layui/layui.all.js"></script>
+        <link rel="stylesheet" href="./lib/layui/css/layui.css" />
+        <script type="text/javascript" src="./lib/zTree/js/jquery.ztree.all.min.js"></script>
+        <link href="./lib/zTree/css/zTreeStyle.css" rel="stylesheet" />
+        <!-- 公共js -->
+        <script type="text/javascript" src="./js/common.js"></script>
+        <!-- 当前页需要的js -->
+        <script type="text/javascript" src="./js/list-equipment-edit.js"></script>
+        <!-- 字体 -->
+        <link href="css/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <!-- 公共样式 -->
+        <link href="./css/style.css" rel="stylesheet" />
+        <link href="./css/list-edit.css" rel="stylesheet" />
+    </head>
+
+    <body>
+        <div class="scheduling">
+            <div class="header">
+                <a id="comBack" class="back" href="javascript:;"> <img src="img/back.png" /> </a>
+                <p>新增</p>
+            </div>
+            <div class="contentEdit">
+                <form id="form" class="layui-form clearfix">
+                    <div class="searchItem">
+                        <label class="title">车类型：</label>
+                        <div class="inputBlock">
+                            <select name="equipmentType">
+                                <option value="">请选择车</option>
+                                <option value="扫雪车">扫雪车</option>
+                                <option value="垃圾车">垃圾车</option>
+                                <option value="救护车">救护车</option>
+                                <option value="空调车">空调车</option>
+                                <option value="充氮车">充氮车</option>
+                                <option value="充氧车">充氧车</option>
+                                <option value="电源车">电源车</option>
+                                <option value="主力泡沫消防车">主力泡沫消防车</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="searchItem">
+                        <label class="title">车牌：</label>
+                        <div class="inputBlock"><input class="layui-input" type="text" name="carNumber" placeholder="请输入车牌" autocomplete="off" /></div>
+                    </div>
+                    <div class="searchItem">
+                        <label class="title">型号：</label>
+                        <div class="inputBlock"><input class="layui-input" type="text" name="model" placeholder="请输入车型号" autocomplete="off" /></div>
+                    </div>
+                    <div class="searchItem">
+                        <label class="title">厂家：</label>
+                        <div class="inputBlock"><input class="layui-input" type="text" name="manufacturer" placeholder="请输入厂家" autocomplete="off" /></div>
+                    </div>
+                    <div class="searchItem">
+                        <label class="title">出厂日期：</label>
+                        <div class="inputBlock"><input class="layui-input" id="manufactureDate" type="text" name="manufactureDate" placeholder="请选择出厂日期" /></div>
+                    </div>
+                    <div class="searchItem">
+                        <label class="title">载重量：</label>
+                        <div class="inputBlock"><input class="layui-input" type="text" name="load" placeholder="请输入载重量（吨）" autocomplete="off" /></div>
+                    </div>
+                    <div class="searchItem"><button type="button" class="searchBtn">完成</button></div>
+                </form>
+            </div>
+        </div>
+    </body>
+
+</html>

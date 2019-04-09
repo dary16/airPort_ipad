@@ -1,0 +1,332 @@
+var addData = {};
+var editData = {};
+var isEdit = false;
+var curId, isView;
+var html = '';
+var getCarsObj = {};
+var getUserObj = {};
+var carNum = '';
+var selectData = [];
+html += '<div class="groupLine clearfix">';
+html += '<div class="searchItem">';
+html += '<label class="title">车辆：</label>';
+html += '<div class="inputBlock">';
+html += '<input readonly style="text-align:left" class="layui-input getCarData" type="text" placeholder="请选择车" />';
+html += '</div>';
+html += '</div>';
+html += '<div class="searchItem" style="width:50%;">';
+html += '<label class="title">司机：</label>';
+html += '<div class="inputBlock">';
+html += '<input readonl style="text-align:left" class="layui-input getUserData" type="text" placeholder="请选择人员" />';
+html += '</div>';
+html += '</div>';
+html += '<span class="operationBtn delBtns" href="javascript:;">删除</span>';
+html += '</div>';
+$(function() {
+    isEdit = getParam('edit');
+    curId = getParam('id');
+    carNum = getParam('carNum');
+    isView = getParam('view');
+    laydate.render({
+        elem: '#sendTime',
+        type: 'datetime',
+        format: 'yyyy-MM-dd HH:mm',
+        done: function(value, date, endDate) {}
+    });
+    getSelectPlaceFn();
+
+    if (isEdit || isEdit == 'true') {
+        $('#status').hide();
+        // $('#taskType').hide();
+    }
+    if ((isEdit || isEdit == 'true') && (isView || isView == 'true')) {
+        $('.operationBtn').each(function(i, v) {
+            $(this).remove();
+        });
+    }
+    //完成按钮
+    $('#searchBtn').on('click', function() {
+        var getFormData = $('#form').serializeArray();
+        getFormData.forEach(function(item) {
+            addData[item.name] = item.value;
+        });
+
+        if (isEdit || isEdit == 'true') {
+            //编辑
+            $.extend(editData, addData);
+        }
+
+        var sendCarUser = [];
+        $.each($('.groupLine'), function(i, v) {
+            var obj1 = $(v)
+                .find('.getCarData')
+                .attr('obj');
+            var obj2 = $(v)
+                .find('.getUserData')
+                .attr('obj');
+
+            if (obj1 != undefined && obj2 != undefined) {
+                var obj = $.extend(JSON.parse(obj1), JSON.parse(obj2));
+            } else if (obj1 == undefined && obj2 != undefined) {
+                var obj = $.extend({}, JSON.parse(obj2));
+            } else if (obj1 != undefined && obj2 == undefined) {
+                var obj = $.extend(JSON.parse(obj1), {});
+            } else if (obj1 == undefined && obj2 == undefined) {
+                var obj = {};
+            }
+            if (JSON.stringify(obj) && JSON.stringify(obj) != '{}' && obj != undefined) {
+                sendCarUser.push(obj);
+            }
+        });
+
+        if (isEdit || isEdit == 'true') {
+            console.log(sendCarUser.length, 'hahahha');
+            editData.sendCarUser = sendCarUser;
+            //编辑
+            getRequest('airPortService/busSendCarTask/add', 'post', editData, function(data) {
+                layer.msg('编辑成功！');
+                window.location.href = 'list-car-task.html';
+            });
+        } else {
+            addData.sendCarUser = sendCarUser;
+            //新增
+            getRequest('airPortService/busSendCarTask/add', 'post', addData, function(data) {
+                layer.msg('新增成功！');
+                window.location.href = 'list-car-task.html';
+            });
+        }
+    });
+
+    $('#addBtn').on('click', function() {
+        $('.groupWrap').append(html);
+    });
+    $('.groupWrap').on('click', '.delBtns', function() {
+        $(this)
+            .parent('.groupLine')
+            .remove();
+    });
+
+    $('.groupWrap').on('click', '.getCarData', function() {
+        var _this = $(this);
+
+        getCarsObj = {};
+
+        var checkedArr = [];
+        $('.getCarData').each(function(i, v) {
+            if ($(this).attr('obj') != undefined && $(this).attr('obj') != 'undefined') {
+                checkedArr.push($(this).attr('obj'));
+            }
+        });
+        var param = {};
+        if (editData.createType == '指派') {
+            param.carType = editData.carCode;
+        }
+
+        getCarsFn(
+            'airPortService/busCar/listType',
+            'post',
+            param,
+            function(obj, arr) {
+                if (arr.length != 1) {
+                    layer.msg('请选择一个车！');
+                    return false;
+                }
+                obj.remove();
+                getCarsObj = JSON.parse(arr[0]);
+                // $.extend(getCarsObj, getUserObj);
+                _this.attr('obj', JSON.stringify(getCarsObj));
+                _this.val(getCarsObj.carType + '(' + getCarsObj.carCode + ')');
+            },
+            checkedArr
+        );
+    });
+
+    $('.getCarsFn').on('click', function() {
+        var checkedArr = [];
+        $('.getCarData').each(function(i, v) {
+            if ($(this).attr('obj') != undefined && $(this).attr('obj') != 'undefined') {
+                checkedArr.push($(this).attr('obj'));
+            }
+        });
+        var param = {};
+        if (editData.createType == '指派') {
+            param.carType = editData.carCode;
+        }
+        getCarsFn(
+            'airPortService/busCar/listType',
+            'post',
+            param,
+            function(obj, arr) {
+                if (arr.length < 1) {
+                    layer.msg('请至少选择一个车！');
+                    return false;
+                }
+                obj.remove();
+                var num = -1;
+                $('.getCarData').each(function(i, v) {
+                    var _this = $(this);
+                    if (!$(this).attr('obj')) {
+                        num++;
+                        if (num < arr.length) {
+                            $(this).attr('obj', arr[num]);
+                            $(this).val(JSON.parse(arr[num]).carType + '(' + JSON.parse(arr[num]).carCode + ')');
+                        }
+                    }
+                });
+            },
+            checkedArr
+        );
+    });
+
+    $('.groupWrap').on('click', '.getUserData', function() {
+        var _this = $(this);
+        getUserObj = {};
+        //弹出选人的框
+        getUsersFn(
+            'airPortService/api/web/selectTopUserTree',
+            'get',
+            {},
+            function(obj, arr) {
+                if (arr.length != 1) {
+                    layer.msg('请选择一个人！');
+                }
+                obj.remove();
+                getUserObj = arr[0];
+                // $.extend(getUserObj, getCarsObj);
+                _this.attr('obj', JSON.stringify(getUserObj));
+                _this.val(getUserObj.label);
+            },
+            null
+        );
+    });
+});
+
+//获取下拉列表
+function getSelectPlaceFn() {
+    getRequest('airPortService/busCarPlace/list', 'post', {}, function(data) {
+        selectData = data.rows;
+        var html = '';
+        data.rows.forEach(function(item) {
+            html += '<option value="' + item.name + '">' + item.name + '</option>';
+        });
+        $('#placeList').append(html);
+        form.render('select');
+        //获得编辑数据
+        if (isEdit || isEdit == 'true') {
+            getEditDataFn();
+        }
+    });
+}
+//获取编辑的数据
+function getEditDataFn() {
+    getRequest(
+        'airPortService/busSendCarTask/get',
+        'post',
+        {
+            id: curId
+        },
+        function(data) {
+            editData = data;
+
+            var sendCarUser = editData.sendCarUser;
+            if (editData.createType == '指派') {
+                var subHtml = '';
+                for (var i = 0; i < editData.carNum - 1; i++) {
+                    subHtml += html;
+                }
+                $('.groupWrap').append(subHtml);
+                $('.operationBtn').each(function(i, v) {
+                    $(this).remove();
+                });
+                var isInclude = false;
+                selectData.forEach(function(item, index) {
+                    if (item.name == editData.carPlace) {
+                        isInclude = true;
+                    }
+                });
+                if (!isInclude) {
+                    $('#placeList').append('<option value="' + editData.carPlace + '">' + editData.carPlace + '</option>');
+                }
+
+                $('.contentEdit')
+                    .find('input,select')
+                    .each(function(i, v) {
+                        $(v).val(editData[v.name]);
+                    });
+                form.render('select');
+                if (sendCarUser.length != 0) {
+                    $('.groupWrap')
+                        .find('.getCarData')
+                        .each(function(i, v) {
+                            var obj = {
+                                carId: sendCarUser[i].carId,
+                                carType: sendCarUser[i].carType,
+                                carCode: sendCarUser[i].carCode,
+                                carModel: sendCarUser[i].carModel
+                            };
+                            $(this).attr('obj', JSON.stringify(obj));
+                            $(v).val(sendCarUser[i].carType + '(' + sendCarUser[i].carCode + ')');
+                        });
+                    $('.groupWrap')
+                        .find('.getUserData')
+                        .each(function(i, v) {
+                            var obj = {
+                                label: sendCarUser[i].label,
+                                id: sendCarUser[i].id,
+                                peopleLevel: sendCarUser[i].peopleLevel,
+                                peopleRole: sendCarUser[i].peopleRole
+                            };
+                            $(this).attr('obj', JSON.stringify(obj));
+                            $(v).val(sendCarUser[i].label);
+                        });
+                }
+            } else if (sendCarUser.length != 0) {
+                sendCarUser.forEach(function(item, index) {
+                    if (index == sendCarUser.length - 1) {
+                        return false;
+                    }
+                    $('.groupWrap').append(html);
+                });
+                var isInclude = false;
+                selectData.forEach(function(item, index) {
+                    if (item.name == editData.carPlace) {
+                        isInclude = true;
+                    }
+                });
+                if (!isInclude) {
+                    $('#placeList').append('<option value="' + editData.carPlace + '">' + editData.carPlace + '</option>');
+                }
+                $('.contentEdit')
+                    .find('input,select')
+                    .each(function(i, v) {
+                        $(v).val(editData[v.name]);
+                    });
+                form.render('select');
+                $('.groupWrap')
+                    .find('.getCarData')
+                    .each(function(i, v) {
+                        var obj = {
+                            carId: sendCarUser[i].carId,
+                            carType: sendCarUser[i].carType,
+                            carCode: sendCarUser[i].carCode,
+                            carModel: sendCarUser[i].carModel
+                        };
+                        $(this).attr('obj', JSON.stringify(obj));
+                        $(v).val(sendCarUser[i].carType + '(' + sendCarUser[i].carCode + ')');
+                    });
+                $('.groupWrap')
+                    .find('.getUserData')
+                    .each(function(i, v) {
+                        var obj = {
+                            label: sendCarUser[i].label,
+                            id: sendCarUser[i].id,
+                            peopleLevel: sendCarUser[i].peopleLevel,
+                            peopleRole: sendCarUser[i].peopleRole
+                        };
+                        $(this).attr('obj', JSON.stringify(obj));
+                        $(v).val(sendCarUser[i].label);
+                    });
+            }
+        }
+    );
+}
