@@ -73,19 +73,10 @@ function getRequest(url, method, param, callback) {
             userId: getUserId
         });
     }
-<<<<<<< .mine
+
     $.extend(param, {
         userId: '1011'
     });
-||||||| .r128
-    // $.extend(param, {
-    //     userId: '1011'
-    // });
-=======
-    // $.extend(param, {
-    //     userId: '1017'
-    // });
->>>>>>> .r255
     if (method == 'get') {
         getParam = param;
     } else {
@@ -718,8 +709,6 @@ function showPicsFn(url) {
 
 //播放视频
 function playVideoFn(url) {
-    // var html = '<div class="viewVideo"><video controls="controls" src="' + url + '"</video></div>';
-    //var html = '<div class="viewVideo"><video controls="controls" autoplay="autoplay"><source src="' + url + '" type="video/mp4" />' + 'Your browser does not support the video tag.' + '"</video></div>';
     var html = '<div class="viewVideo"><video id="my-video" class="video-js" controls="controls" autoplay="autoplay" preload="auto" data-setup="{}"><source src="' + url + '" type="video/mp4" />' + 'Your browser does not support the video tag.' + '"</video></div>';
     $('body').append(html);
     $('.viewVideo').on('click', function() {
